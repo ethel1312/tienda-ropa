@@ -12,5 +12,16 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+
+        <!-- Estilo para los TextInputLayout -->
+        <item name="textInputStyle">@style/Widget.Tienda_Ropa.TextInputLayout.OutlinedBox</item>
+
+    </style>
+
+    <style name="Widget.Tienda_Ropa.TextInputLayout.OutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundColor">@android:color/white</item> <!-- Fondo blanco -->
+        <item name="boxStrokeColor">@color/purple_500</item>        <!-- Borde morado -->
+        <item name="boxStrokeWidth">2dp</item>                      <!-- Grosor del borde -->
+        <item name="hintTextColor">@color/purple_700</item>         <!-- Color del hint -->
     </style>
 </resources>
