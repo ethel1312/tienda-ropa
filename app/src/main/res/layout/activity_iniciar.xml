@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:inputType="text"
             android:maxLines="1"
-            android:text="admin" />
+            android:text="@string/val_strUsername" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -86,7 +86,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:text="123456" />
+            android:text="@string/val_strPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -133,16 +133,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="24dp" />
+        />
 
-
-    <TextView
-        android:id="@+id/jsonText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/tvTerminos"
-        app:layout_constraintTop_toBottomOf="@+id/tvOlvidoContrasena"
-        tools:layout_editor_absoluteX="145dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

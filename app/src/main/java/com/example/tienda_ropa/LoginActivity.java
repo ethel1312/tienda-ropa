@@ -14,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat;
 public class LoginActivity extends AppCompatActivity {
 
     Button mBtnCorreo;
+    Button mBtnCrearCuenta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,9 +24,15 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mBtnCorreo = findViewById(R.id.btnCorreo);
+        mBtnCrearCuenta = findViewById(R.id.btnCrearCuenta);
 
         mBtnCorreo.setOnClickListener(v -> {
             Intent intent = new Intent(this, IniciarActivity.class);
+            startActivity((intent));
+        });
+
+        mBtnCrearCuenta.setOnClickListener(v -> {
+            Intent intent = new Intent(this, RegistrarActivity.class);
             startActivity((intent));
         });
 
