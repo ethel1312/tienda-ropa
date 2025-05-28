@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -18,6 +20,10 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.tienda_ropa.Interface.PyAnyApi;
 import com.example.tienda_ropa.model.AuthReq;
 import com.example.tienda_ropa.model.AuthResp;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,10 +33,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class IniciarActivity extends AppCompatActivity {
 
-    TextView mJsonText;
-    EditText mEtxtUsername;
-    EditText mEtxtPassword;
-    Button mBtnIniciarSesion;
+    // Controles MDC
+    TextInputLayout usernameTextInput;
+    TextInputEditText usernameEditText;
+    TextInputLayout passwordTextInput;
+    TextInputEditText passwordEditText;
+    MaterialButton mBtnIniciarSesion;
+    ImageButton btnBack;
     SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
 
@@ -44,15 +53,31 @@ public class IniciarActivity extends AppCompatActivity {
         sharedPref = this.getSharedPreferences("user_session", Context.MODE_PRIVATE);
         editor = sharedPref.edit();
 
-        mJsonText = findViewById(R.id.jsonText);
-        mEtxtUsername = findViewById(R.id.etUsuario);
-        mEtxtPassword = findViewById(R.id.etPassword);
+        btnBack = findViewById(R.id.btnBack);
+        usernameTextInput = findViewById(R.id.username_text_input);
+        usernameEditText = findViewById(R.id.username_edit_text);
+        passwordTextInput = findViewById(R.id.password_text_input);
+        passwordEditText = findViewById(R.id.password_edit_text);
         mBtnIniciarSesion = findViewById(R.id.btnLogin);
 
         mBtnIniciarSesion.setOnClickListener(v -> {
-            obtenerToken(mEtxtUsername.getText().toString(),mEtxtPassword.getText().toString());
-            Intent intent = new Intent(this, RegistrarActivity.class);
-            startActivity(intent);
+            String username = usernameEditText.getText().toString();
+            String password = passwordEditText.getText().toString();
+
+            if (username.isEmpty() || password.isEmpty()) {
+                Snackbar.make(mBtnIniciarSesion, "Ingrese usuario y contraseña", Snackbar.LENGTH_SHORT).show();
+                return;
+            }
+
+            obtenerToken(username, password);
+
+        });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
         });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -75,19 +100,29 @@ public class IniciarActivity extends AppCompatActivity {
         call.enqueue(new Callback<AuthResp>() {
             @Override
             public void onResponse(Call<AuthResp> call, Response<AuthResp> response) {
-                if(!response.isSuccessful()){
-                    mJsonText.setText("Codigo: " + response.code());
+                if (!response.isSuccessful()) {
+                    if (response.code() == 401) {
+                        Snackbar.make(mBtnIniciarSesion, "Usuario o contraseña incorrectos", Snackbar.LENGTH_LONG).show();
+                    } else {
+                        Snackbar.make(mBtnIniciarSesion, "Error: Código " + response.code(), Snackbar.LENGTH_LONG).show();
+                    }
+                    return;
                 }
+
                 AuthResp objAuthResp = response.body();
                 String token = objAuthResp.getAccess_token().toString();
                 Log.d("TOKEN_DEBUG", token);
                 editor.putString("token", token);
                 editor.apply();
+
+                Intent intent = new Intent(IniciarActivity.this, RegistrarActivity.class);
+                startActivity(intent);
+                finish();
             }
 
             @Override
             public void onFailure(Call<AuthResp> call, Throwable throwable) {
-                mJsonText.setText(throwable.getMessage());
+                Snackbar.make(mBtnIniciarSesion, "Error de red: " + throwable.getMessage(), Snackbar.LENGTH_LONG).show();
             }
         });
     }
