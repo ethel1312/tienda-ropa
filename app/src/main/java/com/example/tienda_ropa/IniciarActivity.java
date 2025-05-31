@@ -38,6 +38,8 @@ public class IniciarActivity extends AppCompatActivity {
     TextInputEditText usernameEditText;
     TextInputLayout passwordTextInput;
     TextInputEditText passwordEditText;
+    TextView tvOlvidoContrasena;
+    TextView tvLinkTerminos;
     MaterialButton mBtnIniciarSesion;
     ImageButton btnBack;
     SharedPreferences sharedPref;
@@ -58,7 +60,25 @@ public class IniciarActivity extends AppCompatActivity {
         usernameEditText = findViewById(R.id.username_edit_text);
         passwordTextInput = findViewById(R.id.password_text_input);
         passwordEditText = findViewById(R.id.password_edit_text);
+        tvOlvidoContrasena = findViewById(R.id.tvOlvidoContrasena);
+        tvLinkTerminos = findViewById(R.id.tvLinkTerminos);
         mBtnIniciarSesion = findViewById(R.id.btnLogin);
+
+        tvOlvidoContrasena.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(IniciarActivity.this, OlvidarActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        tvLinkTerminos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(IniciarActivity.this, TerminosActivity.class);
+                startActivity(intent);
+            }
+        });
 
         mBtnIniciarSesion.setOnClickListener(v -> {
             String username = usernameEditText.getText().toString();

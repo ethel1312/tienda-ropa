@@ -5,4 +5,30 @@
     <string name="title_notifications">Notifications</string>
     <string name="val_strUsername">admin</string>
     <string name="val_strPassword">123456</string>
+    <string name="client_id">261443689387-f2gqe3i91mnus973amgh09tqm9190vkm.apps.googleusercontent.com</string>
+    <string name="terminos_texto">Al conectar su cuenta, confirme que acepta nuestros Términos y Condiciones.</string>
+    <string name="terminos_condiciones">
+    Los Términos y Condiciones de Uso que a continuación se describen son de carácter general y aplicables al uso de la aplicación móvil UrbanStore, desarrollada para la comercialización de prendas de vestir y accesorios. Al utilizar la aplicación UrbanStore, el usuario declara haber leído, comprendido y aceptado estos Términos y Condiciones. Si el usuario no está de acuerdo con ellos, deberá abstenerse de utilizar la aplicación o enviar sus datos personales.\n\n
+    PRIMERO: DERECHOS DE AUTOR: URBANSTORE SE RESERVA TODOS LOS DERECHOS\n
+    Esta aplicación se encuentra protegida por la legislación vigente sobre derechos de autor. Todos los derechos relacionados con el contenido, diseño, imágenes, productos y funcionalidades son propiedad exclusiva de UrbanStore, salvo que se indique lo contrario. Está prohibido el uso, reproducción, distribución o modificación de cualquier contenido sin autorización expresa, salvo en los casos permitidos por la ley.\n\n
+    SEGUNDO: RESPONSABILIDAD DEL USUARIO\n
+    Para poder realizar compras, consultas o registrarse en la aplicación, el usuario debe completar el formulario correspondiente con datos reales y verificables. Es responsabilidad del usuario mantener actualizada su información y hacer un uso adecuado de la aplicación.\n\n
+    TERCERO: POLÍTICA DE PROTECCIÓN DE DATOS PERSONALES\n
+    En cumplimiento con la Ley N.º 29733 – Ley de Protección de Datos Personales, el usuario otorga su consentimiento libre, previo, informado y expreso para que UrbanStore realice el tratamiento de sus datos personales con las siguientes finalidades:\n
+    - Registro en la aplicación\n
+    - Procesamiento y gestión de pedidos\n
+    - Envío de notificaciones y promociones\n
+    - Evaluaciones estadísticas y de comportamiento del cliente\n
+    - Mejora continua de la experiencia de usuario\n\n
+    Los datos personales que se recopilan incluyen: nombres, apellidos, documento de identidad, dirección, correo electrónico, número de celular, ubicación (en caso de uso del GPS para entregas) y preferencias de compra.\n\n
+    Estos datos serán almacenados mientras se mantenga la relación comercial y hasta por 10 años después de la última transacción. El usuario tiene derecho a acceder, rectificar, cancelar u oponerse al tratamiento de sus datos en cualquier momento, a través de los canales de atención indicados en la aplicación o escribiendo a: soporte@urbanstore.com.pe\n\n
+    CUARTO: DISPONIBILIDAD Y USO ADECUADO\n
+    El uso de esta aplicación con fines ilícitos, fraudulentos o contrarios a las normas de orden público está estrictamente prohibido. UrbanStore se reserva el derecho de restringir el acceso a cualquier usuario que incumpla estos términos.\n\n
+    QUINTO: LEGISLACIÓN APLICABLE\n
+    El uso de la aplicación UrbanStore se regirá por las leyes vigentes de la República del Perú.\n\n
+    SEXTO: MODIFICACIONES\n
+    UrbanStore se reserva el derecho de modificar, actualizar o eliminar cualquier contenido, funcionalidad o disposición de estos Términos y Condiciones en cualquier momento. Dichos cambios serán comunicados a través de la aplicación y es responsabilidad del usuario revisar periódicamente esta sección para mantenerse informado.</string>
+    <string name="btnAceptar">Aceptar</string>
+
+
 </resources>
