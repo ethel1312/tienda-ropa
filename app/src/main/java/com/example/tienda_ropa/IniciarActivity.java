@@ -20,6 +20,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.tienda_ropa.Interface.PyAnyApi;
 import com.example.tienda_ropa.model.AuthReq;
 import com.example.tienda_ropa.model.AuthResp;
+import com.example.tienda_ropa.ui.home.HomeFragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
@@ -89,6 +90,8 @@ public class IniciarActivity extends AppCompatActivity {
                 return;
             }
 
+
+
             obtenerToken(username, password);
 
         });
@@ -135,9 +138,8 @@ public class IniciarActivity extends AppCompatActivity {
                 editor.putString("token", token);
                 editor.apply();
 
-                Intent intent = new Intent(IniciarActivity.this, RegistrarActivity.class);
+                Intent intent = new Intent(IniciarActivity.this, MainActivity.class);
                 startActivity(intent);
-                finish();
             }
 
             @Override

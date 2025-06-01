@@ -24,4 +24,6 @@
         <item name="boxStrokeWidth">2dp</item>                      <!-- Grosor del borde -->
         <item name="hintTextColor">@color/purple_700</item>         <!-- Color del hint -->
     </style>
+
+
 </resources>

@@ -94,9 +94,8 @@ public class OlvidarActivity extends AppCompatActivity {
                     // Redirigir al login
                     Intent intent = new Intent(OlvidarActivity.this, VerificarActivity.class);
                     intent.putExtra("email", email); // <- Aquí pasas el email
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
-
                 } else {
                     Toast.makeText(OlvidarActivity.this, "Respuesta inesperada del servidor", Toast.LENGTH_SHORT).show();
                 }
