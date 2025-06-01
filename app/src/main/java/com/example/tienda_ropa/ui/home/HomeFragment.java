@@ -1,5 +1,7 @@
 package com.example.tienda_ropa.ui.home;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -38,6 +41,22 @@ public class HomeFragment extends Fragment {
 
         return root;
     }
+
+    // para el nombre en el inicio
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        SharedPreferences prefs = requireActivity()
+                .getSharedPreferences("user_session", Context.MODE_PRIVATE);
+        String username = prefs.getString("username", "Usuario");
+        String saludo = "Hola, " + username;
+        AppCompatActivity act = (AppCompatActivity) getActivity();
+        if (act != null && act.getSupportActionBar() != null) {
+            act.getSupportActionBar().setTitle(saludo);
+        }
+    }
+
 
     @Override
     public void onDestroyView() {

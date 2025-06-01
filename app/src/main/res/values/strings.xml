@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Tienda_Ropa</string>
+    <string name="Menu_casita">Inicio</string>
+    <string name="Menu_favoritos">Favoritos</string>
+    <string name="Menu_compras">Compras</string>
+    <string name="val_strUsername">admin</string>
+    <string name="val_strPassword">123456</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
@@ -29,6 +34,4 @@
     SEXTO: MODIFICACIONES\n
     UrbanStore se reserva el derecho de modificar, actualizar o eliminar cualquier contenido, funcionalidad o disposición de estos Términos y Condiciones en cualquier momento. Dichos cambios serán comunicados a través de la aplicación y es responsabilidad del usuario revisar periódicamente esta sección para mantenerse informado.</string>
     <string name="btnAceptar">Aceptar</string>
-
-
 </resources>

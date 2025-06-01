@@ -49,7 +49,9 @@ public class IniciarActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_iniciar);
 
@@ -136,6 +138,8 @@ public class IniciarActivity extends AppCompatActivity {
                 String token = objAuthResp.getAccess_token().toString();
                 Log.d("TOKEN_DEBUG", token);
                 editor.putString("token", token);
+                String username = usernameEditText.getText().toString();
+                editor.putString("username", usernameEditText.getText().toString());
                 editor.apply();
 
                 Intent intent = new Intent(IniciarActivity.this, MainActivity.class);
