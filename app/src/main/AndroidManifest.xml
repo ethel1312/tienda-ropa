@@ -19,13 +19,25 @@
             android:name=".PagoMetodoActivity"
             android:exported="false" />
         <activity
+            android:name=".TerminosActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ModificarContraActivity"
+            android:exported="false" />
+        <activity
+            android:name=".VerificarActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OlvidarActivity"
+            android:exported="false" />
+        <activity
+            android:name=".IniciarActivity"
+            android:exported="false" />
+        <activity
             android:name=".RegistrarActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity_login"
             android:exported="false" />
         <activity
             android:name=".ui.home.SplashActivity"
