@@ -8,6 +8,30 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+
+
+    <!-- METODO DE PAGO -->
+    <string name="title_add_payment">Añadir una tarjeta</string>
+    <string name="visa">Visa</string>
+    <string name="mastercard">Mastercard</string>
+    <string name="yape">Yape</string>
+    <string name="titular_tarjeta">Titular de la tarjeta</string>
+    <string name="numero_tarjeta">Número de tarjeta</string>
+    <string name="exp">EXP</string>
+    <string name="cvv">CVV</string>
+    <string name="guardar_como_principal">Guardar como tarjeta principal</string>
+    <string name="numero_celular_yape">Número de celular Yape</string>
+    <string name="codigo_aprobacion">Código de aprobación</string>
+    <string name="btn_añadir">Añadir</string>
+    <string name="btn_confirmar">Confirmar</string>
+
+    <string name="desc_mastercard">boton Mastercard</string>
+    <string name="desc_visa">boton Visa</string>
+    <string name="desc_yape">boton Yape</string>
+
+
+
+
     <string name="val_strUsername">ethel1312</string>
     <string name="val_strPassword">ethel1312</string>
     <string name="client_id">261443689387-f2gqe3i91mnus973amgh09tqm9190vkm.apps.googleusercontent.com</string>
