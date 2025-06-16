@@ -16,6 +16,9 @@
             android:name=".YapeActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.home.DetallesPrenda"
+            android:exported="false" />
+        <activity
             android:name=".PagoMetodoActivity"
             android:exported="false" />
         <activity
@@ -39,6 +42,7 @@
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
+
         <activity
             android:name=".ui.home.SplashActivity"
             android:exported="true"
