@@ -20,6 +20,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.tienda_ropa.Interface.PyAnyApi;
 import com.example.tienda_ropa.model.AuthReq;
 import com.example.tienda_ropa.model.AuthResp;
+import com.example.tienda_ropa.ui.home.HomeFragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
@@ -38,6 +39,8 @@ public class IniciarActivity extends AppCompatActivity {
     TextInputEditText usernameEditText;
     TextInputLayout passwordTextInput;
     TextInputEditText passwordEditText;
+    TextView tvOlvidoContrasena;
+    TextView tvLinkTerminos;
     MaterialButton mBtnIniciarSesion;
     ImageButton btnBack;
     SharedPreferences sharedPref;
@@ -46,7 +49,9 @@ public class IniciarActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_iniciar);
 
@@ -58,7 +63,25 @@ public class IniciarActivity extends AppCompatActivity {
         usernameEditText = findViewById(R.id.username_edit_text);
         passwordTextInput = findViewById(R.id.password_text_input);
         passwordEditText = findViewById(R.id.password_edit_text);
+        tvOlvidoContrasena = findViewById(R.id.tvOlvidoContrasena);
+        tvLinkTerminos = findViewById(R.id.tvLinkTerminos);
         mBtnIniciarSesion = findViewById(R.id.btnLogin);
+
+        tvOlvidoContrasena.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(IniciarActivity.this, OlvidarActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        tvLinkTerminos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(IniciarActivity.this, TerminosActivity.class);
+                startActivity(intent);
+            }
+        });
 
         mBtnIniciarSesion.setOnClickListener(v -> {
             String username = usernameEditText.getText().toString();
@@ -68,6 +91,8 @@ public class IniciarActivity extends AppCompatActivity {
                 Snackbar.make(mBtnIniciarSesion, "Ingrese usuario y contraseña", Snackbar.LENGTH_SHORT).show();
                 return;
             }
+
+
 
             obtenerToken(username, password);
 
@@ -116,6 +141,8 @@ public class IniciarActivity extends AppCompatActivity {
                 String token = objAuthResp.getAccess_token().toString();
                 Log.d("TOKEN_DEBUG", token);
                 editor.putString("token", token);
+                String username = usernameEditText.getText().toString();
+                editor.putString("username", usernameEditText.getText().toString());
                 editor.apply();
 
                /* Intent intent = new Intent(IniciarActivity.this, RegistrarActivity.class);
