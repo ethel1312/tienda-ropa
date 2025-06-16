@@ -8,4 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gris">#808080</color>
+    <color name="productGridBackgroundColor">#FFFFFFFF</color>
+
+
 </resources>

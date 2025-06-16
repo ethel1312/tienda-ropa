@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
     id("androidx.navigation.safeargs")
-    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -59,6 +58,9 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.volley)
+    implementation(libs.picasso)
+    implementation(libs.circleindicator)
+
 
     //Google
     implementation (libs.credentials.v160alpha02)
