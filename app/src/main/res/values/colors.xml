@@ -9,6 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gris">#808080</color>
     <color name="productGridBackgroundColor">#FFFFFFFF</color>
-    <color name="grey_100">#FF018786</color>
+    <color name="grey_100">#F5F5F5</color>
 
 </resources>
