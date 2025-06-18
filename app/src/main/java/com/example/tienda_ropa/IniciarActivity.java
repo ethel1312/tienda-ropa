@@ -25,6 +25,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.Gson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -92,10 +93,11 @@ public class IniciarActivity extends AppCompatActivity {
                 return;
             }
 
-
-
             obtenerToken(username, password);
 
+            //Intent intent = new Intent(this, CarritoActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         });
 
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -134,16 +136,40 @@ public class IniciarActivity extends AppCompatActivity {
                     return;
                 }
 
+                Log.d("LOGIN_RESPONSE_DEBUG", new Gson().toJson(response.body()));
+
                 AuthResp objAuthResp = response.body();
                 String token = objAuthResp.getAccess_token().toString();
-                Log.d("TOKEN_DEBUG", token);
-                editor.putString("token", token);
-                String username = usernameEditText.getText().toString();
-                editor.putString("username", usernameEditText.getText().toString());
-                editor.apply();
 
-                Intent intent = new Intent(IniciarActivity.this, MainActivity.class);
+                Log.d("TOKEN_DEBUG", token);
+
+                try {
+                    String[] parts = token.split("\\."); // header.payload.signature
+                    Log.d("TOKEN_PARTS", "Partes del token: " + parts.length);
+                    String payloadJson = new String(android.util.Base64.decode(parts[1], android.util.Base64.URL_SAFE), "UTF-8");
+                    Log.d("TOKEN_PAYLOAD", payloadJson);
+
+                    // Parsear JSON
+                    org.json.JSONObject payload = new org.json.JSONObject(payloadJson);
+                    int idUsuario = payload.getInt("identity"); // Aquí obtienes el ID del usuario
+
+                    // Guardar en SharedPreferences
+                    editor.putString("token", token);
+                    editor.putInt("id_usuario", idUsuario);
+                    editor.putString("username", usernameEditText.getText().toString());
+                    editor.apply();
+
+                    Log.d("USER_ID", String.valueOf(idUsuario));
+                } catch (Exception e){
+                    e.printStackTrace();
+                    Snackbar.make(mBtnIniciarSesion, "Error al decodificar el token", Snackbar.LENGTH_LONG).show();
+                }
+
+
+
+               /* Intent intent = new Intent(IniciarActivity.this, RegistrarActivity.class);
                 startActivity(intent);
+                finish();*/
             }
 
             @Override

@@ -5,6 +5,8 @@ import com.example.tienda_ropa.model.AuthResp;
 import com.example.tienda_ropa.model.EmailReq;
 import com.example.tienda_ropa.model.GeneralResp;
 import com.example.tienda_ropa.model.ModificarContraReq;
+import com.example.tienda_ropa.model.ParamsCategoria;
+import com.example.tienda_ropa.model.PrendaResponse;
 import com.example.tienda_ropa.model.RegistrarUsuarioReq;
 import com.example.tienda_ropa.model.VerificarCodReq;
 
@@ -33,11 +35,15 @@ public interface PyAnyApi {
 
     @POST("api_actualizar_password")
     Call<GeneralResp> actualizar_password(@Body ModificarContraReq modificarContraReq);
-
     @GET("api_obtener_metodos_pago_usuario")
     Call<GeneralResp> api_obtener_metodos_pago_usuario(@Header("Authorization") String authorization);
 
     @DELETE("api_eliminar_metodo_pago/{id}")
     Call<GeneralResp> api_eliminar_metodo_pago(@Header("Authorization") String jwt, @Path("id") int idMetodoPago);
+
+    @POST("api_prendas_por_categoria")
+    Call<PrendaResponse> prendasPorCategoria(
+            @Header("Authorization") String authorization,
+            @Body ParamsCategoria paramsCategoria);
 
 }
