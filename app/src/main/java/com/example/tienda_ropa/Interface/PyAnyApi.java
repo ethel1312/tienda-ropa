@@ -9,7 +9,9 @@ import com.example.tienda_ropa.model.ObtenerCarritoResp;
 import com.example.tienda_ropa.model.ObtenerListaDeseosResp;
 import com.example.tienda_ropa.model.ModificarContraReq;
 import com.example.tienda_ropa.model.ObtenerPrendaResp;
+import com.example.tienda_ropa.model.ParamsCategoria;
 import com.example.tienda_ropa.model.PrendaDetalleResp;
+import com.example.tienda_ropa.model.PrendaResponse;
 import com.example.tienda_ropa.model.RegistrarUsuarioReq;
 import com.example.tienda_ropa.model.VerificarCodReq;
 
@@ -75,4 +77,9 @@ public interface PyAnyApi {
 
     @POST("api_actualizar_password")
     Call<GeneralResp> actualizar_password(@Body ModificarContraReq modificarContraReq);
+
+    @POST("api_prendas_por_categoria")
+    Call<PrendaResponse> prendasPorCategoria(
+            @Header("Authorization") String authorization,
+            @Body ParamsCategoria paramsCategoria);
 }
