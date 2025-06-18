@@ -2,6 +2,7 @@ package com.example.tienda_ropa.ui.home;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,9 +20,9 @@ public class PrendaCardRecyclerViewAdapterH extends RecyclerView.Adapter<PrendaC
     private ImageRequester imageRequester;
 
 
-    public PrendaCardRecyclerViewAdapterH(List<PrendaEntry> p_prendaList){
+    public PrendaCardRecyclerViewAdapterH(List<PrendaEntry> p_prendaList, Context context){
         this.prendaList = p_prendaList;
-            imageRequester = ImageRequester.getInstance();
+            imageRequester = ImageRequester.getInstance(context);
     }
 
 

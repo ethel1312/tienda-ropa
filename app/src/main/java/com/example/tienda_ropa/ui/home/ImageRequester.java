@@ -19,8 +19,8 @@ public class ImageRequester {
     private final ImageLoader imageLoader;
     private final int maxByteSize;
 
-    private ImageRequester() {
-        context = PrendasApplication.getAppContext();
+    private ImageRequester(Context context) {
+        this.context = context.getApplicationContext();
         this.requestQueue = Volley.newRequestQueue(context);
         this.requestQueue.start();
         this.maxByteSize = calculateMaxByteSize();
@@ -51,9 +51,9 @@ public class ImageRequester {
     /**
      * Get a static instance of ImageRequester
      */
-    public static ImageRequester getInstance() {
+    public static ImageRequester getInstance(Context context) {
         if (instance == null) {
-            instance = new ImageRequester();
+            instance = new ImageRequester(context);
         }
         return instance;
     }

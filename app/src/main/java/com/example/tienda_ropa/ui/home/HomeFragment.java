@@ -123,7 +123,7 @@ public class HomeFragment extends Fragment {
                                 PrendaEntry prendaEntry = new PrendaEntry(elemento.getId(),elemento.getNomPrenda(), elemento.getPrecio(), elemento.getUrl_imagen());
                                 prendaList.add(prendaEntry);
                             }
-                            adapter = new PrendaCardRecyclerViewAdapterH(prendaList);
+                            adapter = new PrendaCardRecyclerViewAdapterH(prendaList, getContext());
                             recyclerView.setAdapter(adapter);
                         } else {
                             Toast.makeText(getContext(), "Error en la respuesta de la API", Toast.LENGTH_SHORT).show();
