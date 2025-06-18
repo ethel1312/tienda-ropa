@@ -55,8 +55,8 @@ public class ListaDeseosActivity extends AppCompatActivity implements OnListaDes
         super.onCreate(savedInstanceState);
 
         sharedPref = this.getSharedPreferences("user_session", Context.MODE_PRIVATE);
-        //token= sharedPref.getString("token","");
-        token="JWT "+ "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3NTAwODc5NjIsImlhdCI6MTc1MDA4NzY2MiwibmJmIjoxNzUwMDg3NjYyLCJpZGVudGl0eSI6MX0.0vR2lkrlFdg3Sdasr1oadjjFHGV0khrRfw_s1ov-P2Y";
+        token= sharedPref.getString("token","");
+        //token="JWT "+ "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3NTAwODc5NjIsImlhdCI6MTc1MDA4NzY2MiwibmJmIjoxNzUwMDg3NjYyLCJpZGVudGl0eSI6MX0.0vR2lkrlFdg3Sdasr1oadjjFHGV0khrRfw_s1ov-P2Y";
 
         getSupportActionBar().hide();
         EdgeToEdge.enable(this);

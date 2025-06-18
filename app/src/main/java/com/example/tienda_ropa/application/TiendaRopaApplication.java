@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import androidx.appcompat.app.AppCompatDelegate;
+import com.google.firebase.FirebaseApp;
 
 public class TiendaRopaApplication extends Application {
     private static TiendaRopaApplication instance;
@@ -24,8 +25,9 @@ public class TiendaRopaApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        instance = this;
 
+        instance = this;
+        FirebaseApp.initializeApp(this);
         this.setAppContext(getApplicationContext());
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
