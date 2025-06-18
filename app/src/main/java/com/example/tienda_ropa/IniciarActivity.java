@@ -96,6 +96,9 @@ public class IniciarActivity extends AppCompatActivity {
 
             obtenerToken(username, password);
 
+            //Intent intent = new Intent(this, CarritoActivity.class);
+            Intent intent = new Intent(this, ListaDeseosActivity.class);
+            startActivity(intent);
         });
 
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -142,8 +145,9 @@ public class IniciarActivity extends AppCompatActivity {
                 editor.putString("username", usernameEditText.getText().toString());
                 editor.apply();
 
-                Intent intent = new Intent(IniciarActivity.this, MainActivity.class);
+               /* Intent intent = new Intent(IniciarActivity.this, RegistrarActivity.class);
                 startActivity(intent);
+                finish();*/
             }
 
             @Override

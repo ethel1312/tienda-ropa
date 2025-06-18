@@ -8,6 +8,15 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="informacion_pedido">Información de pedido</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="envio">Costo de envío</string>
+    <string name="total">Total</string>
+    <string name="agregar">Agregar cantidad</string>
+    <string name="disminuir">Disminuir cantidad</string>
+    <string name="eliminar">Eliminar producto</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
     <!-- METODO DE PAGO -->
