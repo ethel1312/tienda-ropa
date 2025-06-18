@@ -9,7 +9,9 @@ import com.example.tienda_ropa.model.ObtenerCarritoResp;
 import com.example.tienda_ropa.model.ObtenerListaDeseosResp;
 import com.example.tienda_ropa.model.ModificarContraReq;
 import com.example.tienda_ropa.model.ObtenerPrendaResp;
+import com.example.tienda_ropa.model.ParamsCategoria;
 import com.example.tienda_ropa.model.PrendaDetalleResp;
+import com.example.tienda_ropa.model.PrendaResponse;
 import com.example.tienda_ropa.model.RegistrarUsuarioReq;
 import com.example.tienda_ropa.model.VerificarCodReq;
 
@@ -30,9 +32,8 @@ public interface PyAnyApi {
                                     @Body RegistrarUsuarioReq registrarUsuarioReq);
 
 
-    @GET("api_obtener_carrito/{idUsuario}")
-    Call<ObtenerCarritoResp> obtenerCarrito(@Path("idUsuario") int idUsuario,
-                                            @Header("Authorization") String authorization);
+    @GET("api_obtener_carrito")
+    Call<ObtenerCarritoResp> obtenerCarrito(@Header("Authorization") String authorization);
 
     @POST("api_incrementar_cantidad")
     Call<GeneralResp> incrementarCantProduc(@Header("Authorization") String authorization,
@@ -47,11 +48,13 @@ public interface PyAnyApi {
                                             @Body ProductoCarritoReq productoCarritoReq);
 
     // API para obtener la lista de deseos
-    @GET("api_obtener_lista_Deseos/{idUsuario}")
-    Call<ObtenerListaDeseosResp> obtenerListaDeseos( @Path("idUsuario") int idUsuario,
-                                                     @Header("Authorization") String authorization);
+//    @GET("api_obtener_lista_Deseos/{idUsuario}")
+//    Call<ObtenerListaDeseosResp> obtenerListaDeseos( @Path("idUsuario") int idUsuario,
+//                                                     @Header("Authorization") String authorization);
 
-    // API para mover un producto al carrito
+    @GET("api_obtener_lista_Deseos")
+    Call<ObtenerListaDeseosResp> obtenerListaDeseos(@Header("Authorization") String authorization);
+
     @POST("api_mover_a_carrito")
     Call<GeneralResp> moverAcarrito(@Header("Authorization") String authorization, @Body ProductoCarritoReq productoCarritoReq);
 
@@ -75,4 +78,9 @@ public interface PyAnyApi {
 
     @POST("api_actualizar_password")
     Call<GeneralResp> actualizar_password(@Body ModificarContraReq modificarContraReq);
+
+    @POST("api_prendas_por_categoria")
+    Call<PrendaResponse> prendasPorCategoria(
+            @Header("Authorization") String authorization,
+            @Body ParamsCategoria paramsCategoria);
 }

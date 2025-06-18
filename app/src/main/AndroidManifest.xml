@@ -53,6 +53,7 @@
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
+
         <activity
             android:name=".ui.home.SplashActivity"
             android:exported="true"
@@ -69,5 +70,5 @@
             android:label="@string/app_name" />
 
     </application>
-</manifest>
 
+</manifest>

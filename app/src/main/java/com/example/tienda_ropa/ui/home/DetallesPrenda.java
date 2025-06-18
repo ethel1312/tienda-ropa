@@ -14,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.android.volley.toolbox.NetworkImageView;
 import com.example.tienda_ropa.Interface.PyAnyApi;
 import com.example.tienda_ropa.R;
+import com.example.tienda_ropa.ui.home.ImageRequester;
 import com.example.tienda_ropa.model.ObtenerPrendaResp;
 import com.example.tienda_ropa.model.PrendaApi;
 import com.example.tienda_ropa.model.PrendaDetalleResp;
@@ -80,7 +81,8 @@ public class DetallesPrenda extends AppCompatActivity {
                     precioPrenda.setText(String.valueOf(prenda.getPrecio()));
                     descripcionPrenda.setText(prenda.getDescripcion());
 
-                    ImageRequester.getInstance().setImageFromUrl(imagenPrenda, prenda.getUrl_imagen());
+                    ImageRequester.getInstance(getBaseContext()).setImageFromUrl(imagenPrenda, prenda.getUrl_imagen());
+
                 } else {
                     Toast.makeText(DetallesPrenda.this, "Error al obtener los detalles de la prenda", Toast.LENGTH_SHORT).show();
                 }
