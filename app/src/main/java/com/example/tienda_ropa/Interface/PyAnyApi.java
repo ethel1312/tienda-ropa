@@ -1,8 +1,10 @@
 package com.example.tienda_ropa.Interface;
 
 import com.example.tienda_ropa.ObtenerCarrito.ProductoCarritoReq;
+import com.example.tienda_ropa.model.ApiResponse;
 import com.example.tienda_ropa.model.AuthReq;
 import com.example.tienda_ropa.model.AuthResp;
+import com.example.tienda_ropa.model.DireccionRequest;
 import com.example.tienda_ropa.model.EmailReq;
 import com.example.tienda_ropa.model.GeneralResp;
 import com.example.tienda_ropa.model.ObtenerCarritoResp;
@@ -11,7 +13,11 @@ import com.example.tienda_ropa.model.ModificarContraReq;
 import com.example.tienda_ropa.model.ObtenerPrendaResp;
 import com.example.tienda_ropa.model.PrendaDetalleResp;
 import com.example.tienda_ropa.model.RegistrarUsuarioReq;
+import com.example.tienda_ropa.model.Ubigeo;
 import com.example.tienda_ropa.model.VerificarCodReq;
+
+import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -75,4 +81,16 @@ public interface PyAnyApi {
 
     @POST("api_actualizar_password")
     Call<GeneralResp> actualizar_password(@Body ModificarContraReq modificarContraReq);
+
+    @POST("/api_direccion_mixta")
+    Call<ApiResponse<List<Ubigeo>>> obtenerUbigeo(
+            @Body Map<String, String> body,
+            @Header("Authorization") String token
+    );
+
+    @POST("/api_agregar_direccion")
+    Call<ApiResponse<Void>> agregarDireccion(
+            @Header("Authorization") String token,
+            @Body DireccionRequest direccion
+    );
 }

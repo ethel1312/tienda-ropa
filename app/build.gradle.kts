@@ -74,6 +74,7 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.play.services.auth)
 
+
     //FireBase
     implementation(libs.google.firebase.auth) // Usa la última versión disponible
 
