@@ -1,33 +1,31 @@
-package com.example.tienda_ropa;
+package com.example.tienda_ropa.ui.deseos;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
-import com.example.tienda_ropa.Interface.OnCantidadChangeListener;
 import com.example.tienda_ropa.Interface.OnListaDeseosListener;
 import com.example.tienda_ropa.Interface.PyAnyApi;
 import com.example.tienda_ropa.ListaDeseos.ListaDeseosCardRecyclerViewAdapter;
-import com.example.tienda_ropa.ObtenerCarrito.CarritoCardRecyclerViewAdapter;
 import com.example.tienda_ropa.ObtenerCarrito.CarritoItemDecoration;
 import com.example.tienda_ropa.ObtenerCarrito.ProductoCarritoReq;
-import com.example.tienda_ropa.model.CarritoApi;
-import com.example.tienda_ropa.model.CarritoEntry;
+import com.example.tienda_ropa.R;
+import com.example.tienda_ropa.databinding.FragmentListaDeseosBinding;
 import com.example.tienda_ropa.model.GeneralResp;
 import com.example.tienda_ropa.model.ListaDeseosApi;
 import com.example.tienda_ropa.model.ListaDeseosEntry;
-import com.example.tienda_ropa.model.ObtenerCarritoResp;
 import com.example.tienda_ropa.model.ObtenerListaDeseosResp;
 import com.google.android.material.textview.MaterialTextView;
 
@@ -35,15 +33,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import retrofit2.Callback; // ← AGREGADO
+import retrofit2.Response; // ← AGREGADO
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ListaDeseosActivity extends AppCompatActivity implements OnListaDeseosListener {
+public class ListaDeseosFragment extends Fragment implements OnListaDeseosListener {
 
-    SharedPreferences sharedPref;
+    private FragmentListaDeseosBinding binding;
     ImageButton mBotonVolver;
+    SharedPreferences sharedPref;
     RecyclerView recyclerView;
     String token;
     int idUsuario;
@@ -52,77 +51,68 @@ public class ListaDeseosActivity extends AppCompatActivity implements OnListaDes
     MaterialTextView txtNumArticulos;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        binding = FragmentListaDeseosBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
 
-        sharedPref = this.getSharedPreferences("user_session", Context.MODE_PRIVATE);
-        token = sharedPref.getString("token","");
+        // Obtener token e id_usuario
+        sharedPref = requireContext().getSharedPreferences("user_session", Context.MODE_PRIVATE);
+        token = sharedPref.getString("token", "");
         idUsuario = sharedPref.getInt("id_usuario", 0);
-        // Agrega este log para ver si lo está leyendo bien
-        Log.d("SESSION_DEBUG", "Token: " + token + ", ID Usuario: " + idUsuario);
+
+        mBotonVolver= binding.btnVolverLD;
+        txtNumArticulos=binding.txtArticulos;
 
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
-        }
-
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_lista_deseos);
-
-        mBotonVolver= findViewById(R.id.btnVolverLD);
-        txtNumArticulos=findViewById(R.id.txtArticulos);
-
-        //para mostrar los productos
-        recyclerView = findViewById(R.id.recycler_viewLD);
+        // Configurar RecyclerView
+        recyclerView = binding.recyclerViewLD;
         recyclerView.setHasFixedSize(true);
-        //recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
-        //recyclerView.setLayoutManager(new GridLayoutManager(this.getBaseContext(), 2, GridLayoutManager.VERTICAL, false));
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         obtenerListaDeseos();
 
-
         mBotonVolver.setOnClickListener(v -> {
-            finish();
+            NavHostFragment.findNavController(ListaDeseosFragment.this).navigateUp();
         });
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        return view;
     }
 
-    private void obtenerListaDeseos(){
+    private void obtenerListaDeseos() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://grupotres.pythonanywhere.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         PyAnyApi dambPyAnyApi = retrofit.create(PyAnyApi.class);
-        Log.d("TOKEN_DEBUG", sharedPref.getString("token",""));
-        //Call<ObtenerListaDeseosResp> call=dambPyAnyApi.obtenerCarrito(1,"JWT "+sharedPref.getString("token",""));
-        Call<ObtenerListaDeseosResp> call=dambPyAnyApi.obtenerListaDeseos("JWT " + token);
-        Log.d("TOKEN_DEBUG", token);
 
+        Call<ObtenerListaDeseosResp> call = dambPyAnyApi.obtenerListaDeseos("JWT " + token);
         call.enqueue(new Callback<ObtenerListaDeseosResp>() {
             @Override
             public void onResponse(Call<ObtenerListaDeseosResp> call, Response<ObtenerListaDeseosResp> response) {
-                if(!response.isSuccessful() || response.body() == null){
-                    Log.e("API_ERROR", "Código: " + response.code() + " - Cuerpo vacío");
+                if (!response.isSuccessful() || response.body() == null) {
+                    Log.e("API_ERROR", "Error en la respuesta de la API");
                     return;
                 }
+
                 ObtenerListaDeseosResp resp = response.body();
                 if (resp.getCode() == 1) {
-                    List<ListaDeseosApi> listaLD= resp.getData();
+                    List<ListaDeseosApi> listaLD = resp.getData();
                     numArticulos(listaLD);
+                    listaDeseosList = new ArrayList<>();
 
-                    listaDeseosList= new ArrayList<>();
-                    for(ListaDeseosApi elemento: listaLD){
-                        ListaDeseosEntry obj= new ListaDeseosEntry(elemento.getUrl_imagen(), elemento.getNomPrenda() , elemento.getPrecio(),elemento.getId_prenda());
+                    for (ListaDeseosApi elemento : listaLD) {
+                        ListaDeseosEntry obj = new ListaDeseosEntry(
+                                elemento.getUrl_imagen(),
+                                elemento.getNomPrenda(),
+                                elemento.getPrecio(),
+                                elemento.getId_prenda()
+                        );
                         listaDeseosList.add(obj);
                     }
 
-                    ListaDeseosCardRecyclerViewAdapter adapter= new ListaDeseosCardRecyclerViewAdapter(listaDeseosList,ListaDeseosActivity.this);
+                    ListaDeseosCardRecyclerViewAdapter adapter =
+                            new ListaDeseosCardRecyclerViewAdapter(listaDeseosList, ListaDeseosFragment.this);
                     recyclerView.setAdapter(adapter);
                     if(conteo==0){
                         int largePadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing);
@@ -132,12 +122,13 @@ public class ListaDeseosActivity extends AppCompatActivity implements OnListaDes
                     conteo++;
                 } else {
                     Log.e("API_ERROR", "Error en el código devuelto: " + resp.getCode());
+
                 }
             }
 
             @Override
             public void onFailure(Call<ObtenerListaDeseosResp> call, Throwable throwable) {
-
+                Log.e("API_ERROR", "Fallo de red: " + throwable.getMessage());
             }
         });
     }
@@ -182,7 +173,7 @@ public class ListaDeseosActivity extends AppCompatActivity implements OnListaDes
                 }
                 obtenerListaDeseos();
                 GeneralResp resp = response.body();
-                Toast miToast= Toast.makeText(getApplicationContext(),resp.getMessage().toString(),Toast.LENGTH_SHORT);
+                Toast miToast= Toast.makeText(requireContext(),resp.getMessage().toString(),Toast.LENGTH_SHORT);
                 miToast.show();
             }
             @Override
@@ -209,7 +200,7 @@ public class ListaDeseosActivity extends AppCompatActivity implements OnListaDes
                 }
                 obtenerListaDeseos();
                 GeneralResp resp = response.body();
-                Toast miToast= Toast.makeText(getApplicationContext(),resp.getMessage().toString(),Toast.LENGTH_SHORT);
+                Toast miToast= Toast.makeText(requireContext(),resp.getMessage().toString(),Toast.LENGTH_SHORT);
                 miToast.show();
             }
             @Override
@@ -217,5 +208,11 @@ public class ListaDeseosActivity extends AppCompatActivity implements OnListaDes
 
             }
         });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

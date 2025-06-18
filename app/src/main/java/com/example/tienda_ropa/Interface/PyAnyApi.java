@@ -32,9 +32,8 @@ public interface PyAnyApi {
                                     @Body RegistrarUsuarioReq registrarUsuarioReq);
 
 
-    @GET("api_obtener_carrito/{idUsuario}")
-    Call<ObtenerCarritoResp> obtenerCarrito(@Path("idUsuario") int idUsuario,
-                                            @Header("Authorization") String authorization);
+    @GET("api_obtener_carrito")
+    Call<ObtenerCarritoResp> obtenerCarrito(@Header("Authorization") String authorization);
 
     @POST("api_incrementar_cantidad")
     Call<GeneralResp> incrementarCantProduc(@Header("Authorization") String authorization,
@@ -49,11 +48,13 @@ public interface PyAnyApi {
                                             @Body ProductoCarritoReq productoCarritoReq);
 
     // API para obtener la lista de deseos
-    @GET("api_obtener_lista_Deseos/{idUsuario}")
-    Call<ObtenerListaDeseosResp> obtenerListaDeseos( @Path("idUsuario") int idUsuario,
-                                                     @Header("Authorization") String authorization);
+//    @GET("api_obtener_lista_Deseos/{idUsuario}")
+//    Call<ObtenerListaDeseosResp> obtenerListaDeseos( @Path("idUsuario") int idUsuario,
+//                                                     @Header("Authorization") String authorization);
 
-    // API para mover un producto al carrito
+    @GET("api_obtener_lista_Deseos")
+    Call<ObtenerListaDeseosResp> obtenerListaDeseos(@Header("Authorization") String authorization);
+
     @POST("api_mover_a_carrito")
     Call<GeneralResp> moverAcarrito(@Header("Authorization") String authorization, @Body ProductoCarritoReq productoCarritoReq);
 
