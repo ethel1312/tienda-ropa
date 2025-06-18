@@ -10,8 +10,11 @@ import com.example.tienda_ropa.model.VerificarCodReq;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
+import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface PyAnyApi {
 
@@ -30,4 +33,11 @@ public interface PyAnyApi {
 
     @POST("api_actualizar_password")
     Call<GeneralResp> actualizar_password(@Body ModificarContraReq modificarContraReq);
+
+    @GET("api_obtener_metodos_pago_usuario")
+    Call<GeneralResp> api_obtener_metodos_pago_usuario(@Header("Authorization") String authorization);
+
+    @DELETE("api_eliminar_metodo_pago/{id}")
+    Call<GeneralResp> api_eliminar_metodo_pago(@Header("Authorization") String jwt, @Path("id") int idMetodoPago);
+
 }
