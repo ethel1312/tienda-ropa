@@ -55,10 +55,10 @@ public class ListaDeseosActivity extends AppCompatActivity implements OnListaDes
         super.onCreate(savedInstanceState);
 
         sharedPref = this.getSharedPreferences("user_session", Context.MODE_PRIVATE);
-        token= sharedPref.getString("token","");
-        //token="JWT "+ "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3NTAwODc5NjIsImlhdCI6MTc1MDA4NzY2MiwibmJmIjoxNzUwMDg3NjYyLCJpZGVudGl0eSI6MX0.0vR2lkrlFdg3Sdasr1oadjjFHGV0khrRfw_s1ov-P2Y";
+        //token= sharedPref.getString("token","");
+        token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3NTAyNTgwNjcsImlhdCI6MTc1MDI1Nzc2NywibmJmIjoxNzUwMjU3NzY3LCJpZGVudGl0eSI6MX0.t-E_mNKbcferJnKarXCk8Tkkbu8zHtJYKRP9fpbNohQ";
 
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_lista_deseos);
 
@@ -94,7 +94,7 @@ public class ListaDeseosActivity extends AppCompatActivity implements OnListaDes
         PyAnyApi dambPyAnyApi = retrofit.create(PyAnyApi.class);
         Log.d("TOKEN_DEBUG", sharedPref.getString("token",""));
         //Call<ObtenerListaDeseosResp> call=dambPyAnyApi.obtenerCarrito(1,"JWT "+sharedPref.getString("token",""));
-        Call<ObtenerListaDeseosResp> call=dambPyAnyApi.obtenerListaDeseos(1,token);
+        Call<ObtenerListaDeseosResp> call=dambPyAnyApi.obtenerListaDeseos(1,"JWT "+token);
         call.enqueue(new Callback<ObtenerListaDeseosResp>() {
             @Override
             public void onResponse(Call<ObtenerListaDeseosResp> call, Response<ObtenerListaDeseosResp> response) {

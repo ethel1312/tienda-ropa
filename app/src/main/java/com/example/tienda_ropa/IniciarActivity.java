@@ -97,7 +97,7 @@ public class IniciarActivity extends AppCompatActivity {
             obtenerToken(username, password);
 
             //Intent intent = new Intent(this, CarritoActivity.class);
-            Intent intent = new Intent(this, ListaDeseosActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         });
 
