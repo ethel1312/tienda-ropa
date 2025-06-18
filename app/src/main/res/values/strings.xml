@@ -58,4 +58,7 @@
     SEXTO: MODIFICACIONES\n
     UrbanStore se reserva el derecho de modificar, actualizar o eliminar cualquier contenido, funcionalidad o disposición de estos Términos y Condiciones en cualquier momento. Dichos cambios serán comunicados a través de la aplicación y es responsabilidad del usuario revisar periódicamente esta sección para mantenerse informado.</string>
     <string name="btnAceptar">Aceptar</string>
+    <string name="direccion_calle">Nombre de la Calle/Dirección</string>
+    <string name="direccion_info_adicional">Información adicional</string>
+    <string name="btnEditarDireccion">Edit address</string>
 </resources>
