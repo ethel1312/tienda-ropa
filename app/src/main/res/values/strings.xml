@@ -8,6 +8,15 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="informacion_pedido">Información de pedido</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="envio">Costo de envío</string>
+    <string name="total">Total</string>
+    <string name="agregar">Agregar cantidad</string>
+    <string name="disminuir">Disminuir cantidad</string>
+    <string name="eliminar">Eliminar producto</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
     <!-- METODO DE PAGO -->
@@ -58,4 +67,7 @@
     SEXTO: MODIFICACIONES\n
     UrbanStore se reserva el derecho de modificar, actualizar o eliminar cualquier contenido, funcionalidad o disposición de estos Términos y Condiciones en cualquier momento. Dichos cambios serán comunicados a través de la aplicación y es responsabilidad del usuario revisar periódicamente esta sección para mantenerse informado.</string>
     <string name="btnAceptar">Aceptar</string>
+    <string name="direccion_calle">Nombre de la Calle/Dirección</string>
+    <string name="direccion_info_adicional">Información adicional</string>
+    <string name="btnEditarDireccion">Edit address</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.tienda_ropa.ui.home;
+package com.example.tienda_ropa.ObtenerCarrito;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -10,7 +10,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
-import com.example.tienda_ropa.application.PrendasApplication;
+import com.example.tienda_ropa.application.TiendaRopaApplication;
 
 public class ImageRequester {
     private static ImageRequester instance = null;
@@ -19,8 +19,8 @@ public class ImageRequester {
     private final ImageLoader imageLoader;
     private final int maxByteSize;
 
-    private ImageRequester(Context context) {
-        this.context = context.getApplicationContext();
+    private ImageRequester() {
+        context = TiendaRopaApplication.getAppContext();
         this.requestQueue = Volley.newRequestQueue(context);
         this.requestQueue.start();
         this.maxByteSize = calculateMaxByteSize();
@@ -51,9 +51,9 @@ public class ImageRequester {
     /**
      * Get a static instance of ImageRequester
      */
-    public static ImageRequester getInstance(Context context) {
+    public static ImageRequester getInstance() {
         if (instance == null) {
-            instance = new ImageRequester(context);
+            instance = new ImageRequester();
         }
         return instance;
     }

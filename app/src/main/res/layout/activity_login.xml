@@ -54,11 +54,8 @@
         android:text="Correo electrónico"
         android:textColor="@android:color/white"
         android:backgroundTint="#000000"
-        app:icon="@drawable/correo"
-        app:iconPadding="10dp"
-        app:iconGravity="textStart"
-        android:layout_marginTop="8dp"
-    />
+        app:icon="@drawable/correo" />
+
 
     </LinearLayout>
 
