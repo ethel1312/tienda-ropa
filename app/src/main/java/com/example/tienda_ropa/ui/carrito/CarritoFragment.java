@@ -1,19 +1,17 @@
-package com.example.tienda_ropa;
+package com.example.tienda_ropa.ui.carrito;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +20,8 @@ import com.example.tienda_ropa.Interface.PyAnyApi;
 import com.example.tienda_ropa.ObtenerCarrito.CarritoCardRecyclerViewAdapter;
 import com.example.tienda_ropa.ObtenerCarrito.CarritoItemDecoration;
 import com.example.tienda_ropa.ObtenerCarrito.ProductoCarritoReq;
+import com.example.tienda_ropa.R;
+import com.example.tienda_ropa.databinding.FragmentCarritoBinding;
 import com.example.tienda_ropa.model.CarritoApi;
 import com.example.tienda_ropa.model.CarritoEntry;
 import com.example.tienda_ropa.model.GeneralResp;
@@ -31,7 +31,6 @@ import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,7 +38,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class CarritoActivity extends AppCompatActivity implements OnCantidadChangeListener {
+public class CarritoFragment extends Fragment implements OnCantidadChangeListener {
+
+    private FragmentCarritoBinding binding;
 
     SharedPreferences sharedPref;
     ImageButton mBotonVolver;
@@ -51,81 +52,75 @@ public class CarritoActivity extends AppCompatActivity implements OnCantidadChan
     String token;
     int idUsuario;
     private List<CarritoEntry> carritoList;
-    private int conteo=0;
+    private int conteo = 0;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        sharedPref = this.getSharedPreferences("user_session", Context.MODE_PRIVATE);
-        token= sharedPref.getString("token","");
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentCarritoBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
+
+        sharedPref = requireActivity().getSharedPreferences("user_session", Context.MODE_PRIVATE);
+        token = sharedPref.getString("token", "");
         idUsuario = sharedPref.getInt("id_usuario", 0);
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
-        }
+        mBotonVolver= binding.btnVolver;
+        mBtnVerificar= binding.btnVerificar;
 
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_carrito);
+        txtSubtotal = binding.txtSubtotal;
+        txtEnvio = binding.txtEnvio;
+        txtTotal = binding.txtTotal;
 
-        mBotonVolver= findViewById(R.id.btnVolver);
-        mBtnVerificar= findViewById(R.id.btnVerificar);
-
-        txtSubtotal = findViewById(R.id.txtSubtotal);
-        txtEnvio = findViewById(R.id.txtEnvio);
-        txtTotal = findViewById(R.id.txtTotal);
-
-        //para mostrar los productos
-        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView = binding.recyclerView;
         recyclerView.setHasFixedSize(true);
-        //recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
-        //recyclerView.setLayoutManager(new GridLayoutManager(this.getBaseContext(), 2, GridLayoutManager.VERTICAL, false));
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+        binding.btnVolver.setOnClickListener(v -> requireActivity().onBackPressed());
 
         obtenerCarrito();
 
-
-        mBotonVolver.setOnClickListener(v -> {
-            finish();
-        });
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        return root;
     }
 
-    private void obtenerCarrito(){
+    private void obtenerCarrito() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://grupotres.pythonanywhere.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+
         PyAnyApi dambPyAnyApi = retrofit.create(PyAnyApi.class);
-        Log.d("TOKEN_DEBUG", sharedPref.getString("token",""));
-        Call<ObtenerCarritoResp> call=dambPyAnyApi.obtenerCarrito("JWT " + token);
+
+        Call<ObtenerCarritoResp> call = dambPyAnyApi.obtenerCarrito("JWT " + token);
 
         call.enqueue(new Callback<ObtenerCarritoResp>() {
             @Override
             public void onResponse(Call<ObtenerCarritoResp> call, Response<ObtenerCarritoResp> response) {
-                if(!response.isSuccessful() || response.body() == null){
+                if (!response.isSuccessful() || response.body() == null) {
                     Log.e("API_ERROR", "Código: " + response.code() + " - Cuerpo vacío");
                     return;
                 }
                 ObtenerCarritoResp resp = response.body();
                 if (resp.getCode() == 1) {
                     List<CarritoApi> listaCarrito = resp.getData();
-
-
                     actualizarInformacionPedido(listaCarrito);
-                    carritoList= new ArrayList<>();
-                    for(CarritoApi elemento: listaCarrito){
-                        CarritoEntry obj= new CarritoEntry(elemento.getUrl_imagen(), elemento.getNomPrenda() , elemento.getPrecio(),elemento.getCantidad(),elemento.getId_prenda());
+
+                    carritoList = new ArrayList<>();
+                    for (CarritoApi elemento : listaCarrito) {
+                        CarritoEntry obj = new CarritoEntry(
+                                elemento.getUrl_imagen(),
+                                elemento.getNomPrenda(),
+                                elemento.getPrecio(),
+                                elemento.getCantidad(),
+                                elemento.getId_prenda()
+                        );
                         carritoList.add(obj);
                     }
 
-                    CarritoCardRecyclerViewAdapter adapter= new CarritoCardRecyclerViewAdapter(carritoList,CarritoActivity.this);
+                    CarritoCardRecyclerViewAdapter adapter =
+                            new CarritoCardRecyclerViewAdapter(carritoList, CarritoFragment.this);
                     recyclerView.setAdapter(adapter);
-                    if(conteo==0){
+
+                    if (conteo == 0) {
                         int largePadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing);
                         int smallPadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing_small);
                         recyclerView.addItemDecoration(new CarritoItemDecoration(largePadding, smallPadding));
@@ -135,14 +130,15 @@ public class CarritoActivity extends AppCompatActivity implements OnCantidadChan
                     Log.e("API_ERROR", "Error en el código devuelto: " + resp.getCode());
                 }
             }
+
             @Override
             public void onFailure(Call<ObtenerCarritoResp> call, Throwable throwable) {
-
+                Log.e("API_FAILURE", "Error de red", throwable);
             }
         });
-
     }
 
+    @Override
     public void onIncrementarCantidad(int idPrenda) {
         // Llamamos a la API para aumentar la cantidad del producto
         aumentarCantPro(idPrenda);
@@ -154,7 +150,6 @@ public class CarritoActivity extends AppCompatActivity implements OnCantidadChan
         disminuirCantPro(idPrenda);
     }
 
-    @Override
     public void onEliminarProducto(int idPrenda) {
         eliminarPro(idPrenda);
     }
@@ -168,7 +163,7 @@ public class CarritoActivity extends AppCompatActivity implements OnCantidadChan
         ProductoCarritoReq obj= new ProductoCarritoReq();
         obj.setId_usuario(idUsuario);
         obj.setId_prenda(idPrenda);
-        Call<GeneralResp> call=dambPyAnyApi.incrementarCantProduc(token,obj);
+        Call<GeneralResp> call=dambPyAnyApi.incrementarCantProduc("JWT " + token,obj);
         call.enqueue(new Callback<GeneralResp>() {
             @Override
             public void onResponse(Call<GeneralResp> call, Response<GeneralResp> response) {
@@ -192,7 +187,7 @@ public class CarritoActivity extends AppCompatActivity implements OnCantidadChan
         ProductoCarritoReq obj= new ProductoCarritoReq();
         obj.setId_usuario(idUsuario);
         obj.setId_prenda(idPrenda);
-        Call<GeneralResp> call=dambPyAnyApi.disminuirCantProduc(token,obj);
+        Call<GeneralResp> call=dambPyAnyApi.disminuirCantProduc("JWT " + token,obj);
         call.enqueue(new Callback<GeneralResp>() {
             @Override
             public void onResponse(Call<GeneralResp> call, Response<GeneralResp> response) {
@@ -216,7 +211,7 @@ public class CarritoActivity extends AppCompatActivity implements OnCantidadChan
         ProductoCarritoReq obj= new ProductoCarritoReq();
         obj.setId_usuario(idUsuario);
         obj.setId_prenda(idPrenda);
-        Call<GeneralResp> call=dambPyAnyApi.eliminarProduc(token,obj);
+        Call<GeneralResp> call=dambPyAnyApi.eliminarProduc("JWT " + token,obj);
         call.enqueue(new Callback<GeneralResp>() {
             @Override
             public void onResponse(Call<GeneralResp> call, Response<GeneralResp> response) {
@@ -225,7 +220,7 @@ public class CarritoActivity extends AppCompatActivity implements OnCantidadChan
                 }
                 obtenerCarrito();
                 GeneralResp resp = response.body();
-                Toast miToast= Toast.makeText(getApplicationContext(),resp.getMessage().toString(),Toast.LENGTH_SHORT);
+                Toast miToast= Toast.makeText(requireContext(),resp.getMessage().toString(),Toast.LENGTH_SHORT);
                 miToast.show();
             }
             @Override
@@ -257,5 +252,9 @@ public class CarritoActivity extends AppCompatActivity implements OnCantidadChan
         txtTotal.setText(String.format("S/. %.2f", total));
     }
 
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 }
