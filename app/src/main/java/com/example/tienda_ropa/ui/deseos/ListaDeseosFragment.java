@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -61,7 +62,7 @@ public class ListaDeseosFragment extends Fragment implements OnListaDeseosListen
         token = sharedPref.getString("token", "");
         idUsuario = sharedPref.getInt("id_usuario", 0);
 
-        mBotonVolver= binding.btnVolverLD;
+//        mBotonVolver= binding.btnVolverLD;
         txtNumArticulos=binding.txtArticulos;
 
 
@@ -72,9 +73,9 @@ public class ListaDeseosFragment extends Fragment implements OnListaDeseosListen
 
         obtenerListaDeseos();
 
-        mBotonVolver.setOnClickListener(v -> {
-            NavHostFragment.findNavController(ListaDeseosFragment.this).navigateUp();
-        });
+//        mBotonVolver.setOnClickListener(v -> {
+//            NavHostFragment.findNavController(ListaDeseosFragment.this).navigateUp();
+//        });
 
         return view;
     }
@@ -106,7 +107,8 @@ public class ListaDeseosFragment extends Fragment implements OnListaDeseosListen
                                 elemento.getUrl_imagen(),
                                 elemento.getNomPrenda(),
                                 elemento.getPrecio(),
-                                elemento.getId_prenda()
+                                elemento.getId_prenda(),
+                                elemento.getStock()
                         );
                         listaDeseosList.add(obj);
                     }
@@ -188,9 +190,11 @@ public class ListaDeseosFragment extends Fragment implements OnListaDeseosListen
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         PyAnyApi dambPyAnyApi = retrofit.create(PyAnyApi.class);
+
         ProductoCarritoReq obj= new ProductoCarritoReq();
         obj.setId_usuario(idUsuario);
         obj.setId_prenda(idPrenda);
+
         Call<GeneralResp> call=dambPyAnyApi.eliminarDeListaDeseos("JWT " + token, obj);
         call.enqueue(new Callback<GeneralResp>() {
             @Override
@@ -209,6 +213,16 @@ public class ListaDeseosFragment extends Fragment implements OnListaDeseosListen
             }
         });
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        AppCompatActivity act = (AppCompatActivity) getActivity();
+        if (act != null && act.getSupportActionBar() != null) {
+            act.getSupportActionBar().setTitle("Lista de deseos");
+        }
+    }
+
 
     @Override
     public void onDestroyView() {

@@ -1,6 +1,8 @@
 package com.example.tienda_ropa.Interface;
 
 import com.example.tienda_ropa.ObtenerCarrito.ProductoCarritoReq;
+import com.example.tienda_ropa.model.AgregarAlCarritoReq;
+import com.example.tienda_ropa.model.AgregarListaDeseosReq;
 import com.example.tienda_ropa.model.AuthReq;
 import com.example.tienda_ropa.model.AuthResp;
 import com.example.tienda_ropa.model.EmailReq;
@@ -30,8 +32,12 @@ public interface PyAnyApi {
     @POST("api_registrar_usuario")
     Call<GeneralResp> registrarUsuario(@Header("Authorization") String authorization,
                                     @Body RegistrarUsuarioReq registrarUsuarioReq);
-
-
+    @POST("api_agregar_lista_deseos")
+    Call<GeneralResp> agregarListaDeseos(@Header("Authorization") String authorization,
+                                       @Body AgregarListaDeseosReq agregarListaDeseosReq);
+    @POST("api_agregar_carrito")
+    Call<GeneralResp> agregarAlCarrito(@Header("Authorization") String authorization,
+                                         @Body AgregarAlCarritoReq agregarAlCarritoReq);
     @GET("api_obtener_carrito")
     Call<ObtenerCarritoResp> obtenerCarrito(@Header("Authorization") String authorization);
 
@@ -46,12 +52,6 @@ public interface PyAnyApi {
     @POST("api_eliminar_producto")
     Call<GeneralResp> eliminarProduc(@Header("Authorization") String authorization,
                                             @Body ProductoCarritoReq productoCarritoReq);
-
-    // API para obtener la lista de deseos
-//    @GET("api_obtener_lista_Deseos/{idUsuario}")
-//    Call<ObtenerListaDeseosResp> obtenerListaDeseos( @Path("idUsuario") int idUsuario,
-//                                                     @Header("Authorization") String authorization);
-
     @GET("api_obtener_lista_Deseos")
     Call<ObtenerListaDeseosResp> obtenerListaDeseos(@Header("Authorization") String authorization);
 
@@ -65,7 +65,7 @@ public interface PyAnyApi {
     @GET("api_obtenerprendas_inicio")
     Call<ObtenerPrendaResp> obtenerPrendas(@Header("Authorization") String authorization);
 
-    @GET("api_obtenerdetalleprenda/{id_prenda}")
+    @GET("api_obtener_detalle_prenda/{id_prenda}")
     Call<PrendaDetalleResp> obtenerDetallesPrenda(
             @Header("Authorization") String authorization,
             @Path("id_prenda") int prendaId

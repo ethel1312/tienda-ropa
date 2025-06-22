@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/viewPager"
+        app:layout_constraintBottom_toTopOf="@+id/btnCategorias"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="8dp"
@@ -44,6 +45,38 @@
             android:background="@drawable/carrusel_puntos2" />
     </LinearLayout>
 
+    <!-- Botones HOMBRES y MUJERES -->
+    <LinearLayout
+        android:id="@+id/btnCategorias"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/indicatorLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/txtNovedades"
+        android:gravity="center"
+        android:layout_marginBottom="8dp">
+
+        <Button
+            android:id="@+id/btnHombres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HOMBRES"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="@color/btnCategoriaColor"
+            android:textColor="@android:color/black" />
+
+        <Button
+            android:id="@+id/btnMujeres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MUJERES"
+            android:backgroundTint="@color/btnCategoriaColor"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+
+
     <!-- RecyclerView para las tarjetas de prendas -->
     <androidx.core.widget.NestedScrollView
         android:id="@+id/disco_grid"
@@ -60,7 +93,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/indicatorLayout">
+        app:layout_constraintTop_toBottomOf="@+id/txtNovedades">
 
 
         <!-- RecyclerView dentro del NestedScrollView -->
@@ -71,7 +104,7 @@
     </androidx.core.widget.NestedScrollView>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/txtNovedades"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -81,8 +114,8 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/disco_grid"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/indicatorLayout"
-        app:layout_constraintVertical_bias="0.296" />
-
+        app:layout_constraintTop_toBottomOf="@+id/btnCategorias"
+        app:layout_constraintVertical_bias="0.296"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,7 +6,7 @@
     <!--Carrito-->
     <dimen name="shr_product_grid_spacing">10dp</dimen>
     <dimen name="shr_product_grid_spacing_small">16dp</dimen>
-    <dimen name="shr_product_card_image_height">108dp</dimen>
+    <dimen name="shr_product_card_image_height">200dp</dimen>
     <dimen name="shr_product_grid_reveal_height">200dp</dimen>
 
 

@@ -46,6 +46,7 @@ public class CarritoFragment extends Fragment implements OnCantidadChangeListene
     ImageButton mBotonVolver;
     MaterialButton mBtnVerificar;
     MaterialTextView txtSubtotal;
+    MaterialTextView txtIGV;
     MaterialTextView txtEnvio;
     MaterialTextView txtTotal;
     RecyclerView recyclerView;
@@ -64,10 +65,10 @@ public class CarritoFragment extends Fragment implements OnCantidadChangeListene
         token = sharedPref.getString("token", "");
         idUsuario = sharedPref.getInt("id_usuario", 0);
 
-        mBotonVolver= binding.btnVolver;
         mBtnVerificar= binding.btnVerificar;
 
         txtSubtotal = binding.txtSubtotal;
+        txtIGV = binding.txtIGV;
         txtEnvio = binding.txtEnvio;
         txtTotal = binding.txtTotal;
 
@@ -75,7 +76,7 @@ public class CarritoFragment extends Fragment implements OnCantidadChangeListene
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        binding.btnVolver.setOnClickListener(v -> requireActivity().onBackPressed());
+
 
         obtenerCarrito();
 
@@ -111,7 +112,9 @@ public class CarritoFragment extends Fragment implements OnCantidadChangeListene
                                 elemento.getNomPrenda(),
                                 elemento.getPrecio(),
                                 elemento.getCantidad(),
-                                elemento.getId_prenda()
+                                elemento.getId_prenda(),
+                                elemento.getTalla(),
+                                elemento.getStock()
                         );
                         carritoList.add(obj);
                     }
@@ -233,7 +236,7 @@ public class CarritoFragment extends Fragment implements OnCantidadChangeListene
     private void actualizarInformacionPedido(List<CarritoApi> listaCarrito) {
         double subtotal = 0.0;
         double costoEnvio = 10.0; // Puedes cambiar este valor según convenga
-        double total;
+
 
         for (CarritoApi item : listaCarrito) {
             try {
@@ -245,11 +248,14 @@ public class CarritoFragment extends Fragment implements OnCantidadChangeListene
             }
         }
 
-        total = subtotal + costoEnvio;
+        double totalSinIGV = subtotal + costoEnvio;
+        double igv = subtotal * 0.18;
+        double totalConIGV = totalSinIGV + igv;
 
         txtSubtotal.setText(String.format("S/. %.2f", subtotal));
         txtEnvio.setText(String.format("S/. %.2f", costoEnvio));
-        txtTotal.setText(String.format("S/. %.2f", total));
+        txtIGV.setText(String.format("S/. %.2f", igv));
+        txtTotal.setText(String.format("S/. %.2f", totalConIGV));
     }
 
     @Override

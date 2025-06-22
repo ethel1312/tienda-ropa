@@ -119,7 +119,14 @@ public class CarritoActivity extends AppCompatActivity implements OnCantidadChan
                     actualizarInformacionPedido(listaCarrito);
                     carritoList= new ArrayList<>();
                     for(CarritoApi elemento: listaCarrito){
-                        CarritoEntry obj= new CarritoEntry(elemento.getUrl_imagen(), elemento.getNomPrenda() , elemento.getPrecio(),elemento.getCantidad(),elemento.getId_prenda());
+                        CarritoEntry obj= new CarritoEntry(
+                                elemento.getUrl_imagen(),
+                                elemento.getNomPrenda(),
+                                elemento.getPrecio(),
+                                elemento.getCantidad(),
+                                elemento.getId_prenda(),
+                                elemento.getTalla(),
+                                elemento.getStock());
                         carritoList.add(obj);
                     }
 
