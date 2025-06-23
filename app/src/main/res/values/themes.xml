@@ -1,0 +1,54 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Tienda_Ropa" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Color principal de la marca. -->
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Color de marca secundaria. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Color de la barra de estado. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Personaliza tu tema aquí. -->
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+
+        <!-- Estilo para los TextInputLayout -->
+        <item name="textInputStyle">@style/Widget.Tienda_Ropa.TextInputLayout.OutlinedBox</item>
+
+    </style>
+
+    <style name="Widget.Tienda_Ropa.TextInputLayout.OutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundColor">@android:color/white</item> <!-- Fondo blanco -->
+        <item name="boxStrokeColor">@color/purple_500</item>        <!-- Borde morado -->
+        <item name="boxStrokeWidth">2dp</item>                      <!-- Grosor del borde -->
+        <item name="hintTextColor">@color/purple_700</item>         <!-- Color del hint -->
+    </style>
+
+    <style name="ColorCircleChip" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipMinHeight">25dp</item>
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="chipCornerRadius">24dp</item>
+        <item name="android:padding">0dp</item>
+        <item name="checkedIconVisible">false</item>
+        <item name="android:textSize">0sp</item>
+    </style>
+
+    <style name="ChipTallaEstilo" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@color/white</item>
+        <item name="chipStrokeColor">@color/black</item>
+        <item name="chipStrokeWidth">2dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:layout_width">64dp</item>
+        <item name="android:layout_height">64dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+</resources>
