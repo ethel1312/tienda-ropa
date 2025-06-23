@@ -4,9 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.Spinner;
+import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +20,7 @@ import com.example.tienda_ropa.model.GeneralResp;
 import com.example.tienda_ropa.model.ParamsDepartamento;
 import com.example.tienda_ropa.model.ParamsProvincia;
 import com.example.tienda_ropa.model.Provincia;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
@@ -34,14 +35,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class AgregarDireccionActivity extends AppCompatActivity {
 
     private TextInputEditText etCalle, etReferencia;
-    private Spinner spinnerDepartamento, spinnerProvincia, spinnerDistrito;
-    private Button btnGuardarDireccion;
+    private AutoCompleteTextView spinnerDepartamento, spinnerProvincia, spinnerDistrito;
+    private MaterialButton btnGuardarDireccion;
 
     private PyAnyApi apiService;
-
     private List<Departamento> listaDepartamentos;
     private List<Provincia> listaProvincias;
     private List<Distrito> listaDistritos;
+
+    private ArrayAdapter<String> adapterDepartamentos, adapterProvincias, adapterDistritos;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,33 +62,26 @@ public class AgregarDireccionActivity extends AppCompatActivity {
                 .baseUrl("https://grupotres.pythonanywhere.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
         apiService = retrofit.create(PyAnyApi.class);
 
         cargarDepartamentos();
 
-        spinnerDepartamento.setOnItemSelectedListener(new SimpleOnItemSelectedListener() {
-            @Override
-            public void onItemSelected(int position) {
-                if (position > 0) {
-                    int idDepartamento = listaDepartamentos.get(position - 1).getId_departamento();
-                    cargarProvincias(idDepartamento);
-                } else {
-                    limpiarSpinner(spinnerProvincia);
-                    limpiarSpinner(spinnerDistrito);
-                }
+        spinnerDepartamento.setOnItemClickListener((parent, view, pos, id) -> {
+            if (pos > 0) {
+                int idDep = listaDepartamentos.get(pos - 1).getId_departamento();
+                cargarProvincias(idDep);
+            } else {
+                limpiarAutoComplete(spinnerProvincia);
+                limpiarAutoComplete(spinnerDistrito);
             }
         });
 
-        spinnerProvincia.setOnItemSelectedListener(new SimpleOnItemSelectedListener() {
-            @Override
-            public void onItemSelected(int position) {
-                if (position > 0) {
-                    int idProvincia = listaProvincias.get(position - 1).getId_provincia();
-                    cargarDistritos(idProvincia);
-                } else {
-                    limpiarSpinner(spinnerDistrito);
-                }
+        spinnerProvincia.setOnItemClickListener((parent, view, pos, id) -> {
+            if (pos > 0) {
+                int idProv = listaProvincias.get(pos - 1).getId_provincia();
+                cargarDistritos(idProv);
+            } else {
+                limpiarAutoComplete(spinnerDistrito);
             }
         });
 
@@ -93,23 +89,23 @@ public class AgregarDireccionActivity extends AppCompatActivity {
     }
 
     private void cargarDepartamentos() {
-        Call<List<Departamento>> call = apiService.obtenerDepartamentos();
-
-        call.enqueue(new Callback<List<Departamento>>() {
+        apiService.obtenerDepartamentos().enqueue(new Callback<List<Departamento>>() {
             @Override
             public void onResponse(Call<List<Departamento>> call, Response<List<Departamento>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     listaDepartamentos = response.body();
                     List<String> nombres = new ArrayList<>();
                     nombres.add("Seleccione");
-
-                    for (Departamento dep : listaDepartamentos) {
-                        nombres.add(dep.getNombre_departamento());
+                    for (Departamento d : listaDepartamentos) {
+                        nombres.add(d.getNombre_departamento());
                     }
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(AgregarDireccionActivity.this, android.R.layout.simple_spinner_item, nombres);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerDepartamento.setAdapter(adapter);
+                    adapterDepartamentos = new ArrayAdapter<>(
+                            AgregarDireccionActivity.this,
+                            android.R.layout.simple_dropdown_item_1line,
+                            nombres);
+                    spinnerDepartamento.setAdapter(adapterDepartamentos);
+                    spinnerDepartamento.setText("Seleccione", false);
                 }
             }
 
@@ -121,153 +117,112 @@ public class AgregarDireccionActivity extends AppCompatActivity {
     }
 
     private void cargarProvincias(int idDepartamento) {
-        ParamsDepartamento params = new ParamsDepartamento(idDepartamento);
-        Call<List<Provincia>> call = apiService.obtenerProvincias(params);
+        apiService.obtenerProvincias(new ParamsDepartamento(idDepartamento))
+                .enqueue(new Callback<List<Provincia>>() {
+                    @Override
+                    public void onResponse(Call<List<Provincia>> call, Response<List<Provincia>> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            listaProvincias = response.body();
+                            List<String> nombres = new ArrayList<>();
+                            nombres.add("Seleccione");
+                            for (Provincia p : listaProvincias) {
+                                nombres.add(p.getNombre_provincia());
+                            }
 
-        call.enqueue(new Callback<List<Provincia>>() {
-            @Override
-            public void onResponse(Call<List<Provincia>> call, Response<List<Provincia>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    listaProvincias = response.body();
-                    List<String> nombres = new ArrayList<>();
-                    nombres.add("Seleccione");
-
-                    for (Provincia prov : listaProvincias) {
-                        nombres.add(prov.getNombre_provincia());
+                            adapterProvincias = new ArrayAdapter<>(
+                                    AgregarDireccionActivity.this,
+                                    android.R.layout.simple_dropdown_item_1line,
+                                    nombres);
+                            spinnerProvincia.setAdapter(adapterProvincias);
+                            spinnerProvincia.setText("Seleccione", false);
+                        }
                     }
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(AgregarDireccionActivity.this, android.R.layout.simple_spinner_item, nombres);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerProvincia.setAdapter(adapter);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Provincia>> call, Throwable t) {
-                Toast.makeText(AgregarDireccionActivity.this, "Error al cargar provincias", Toast.LENGTH_SHORT).show();
-            }
-        });
+                    @Override
+                    public void onFailure(Call<List<Provincia>> call, Throwable t) {
+                        Toast.makeText(AgregarDireccionActivity.this, "Error al cargar provincias", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void cargarDistritos(int idProvincia) {
-        ParamsProvincia params = new ParamsProvincia(idProvincia);
-        Call<List<Distrito>> call = apiService.obtenerDistritos(params);
+        apiService.obtenerDistritos(new ParamsProvincia(idProvincia))
+                .enqueue(new Callback<List<Distrito>>() {
+                    @Override
+                    public void onResponse(Call<List<Distrito>> call, Response<List<Distrito>> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            listaDistritos = response.body();
+                            List<String> nombres = new ArrayList<>();
+                            nombres.add("Seleccione");
+                            for (Distrito d : listaDistritos) {
+                                nombres.add(d.getNombre_distrito());
+                            }
 
-        call.enqueue(new Callback<List<Distrito>>() {
-            @Override
-            public void onResponse(Call<List<Distrito>> call, Response<List<Distrito>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    listaDistritos = response.body();
-                    List<String> nombres = new ArrayList<>();
-                    nombres.add("Seleccione");
-
-                    for (Distrito dis : listaDistritos) {
-                        nombres.add(dis.getNombre_distrito());
+                            adapterDistritos = new ArrayAdapter<>(
+                                    AgregarDireccionActivity.this,
+                                    android.R.layout.simple_dropdown_item_1line,
+                                    nombres);
+                            spinnerDistrito.setAdapter(adapterDistritos);
+                            spinnerDistrito.setText("Seleccione", false);
+                        }
                     }
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(AgregarDireccionActivity.this, android.R.layout.simple_spinner_item, nombres);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerDistrito.setAdapter(adapter);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Distrito>> call, Throwable t) {
-                Toast.makeText(AgregarDireccionActivity.this, "Error al cargar distritos", Toast.LENGTH_SHORT).show();
-            }
-        });
+                    @Override
+                    public void onFailure(Call<List<Distrito>> call, Throwable t) {
+                        Toast.makeText(AgregarDireccionActivity.this, "Error al cargar distritos", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
-    private void limpiarSpinner(Spinner spinner) {
+
+    private void limpiarAutoComplete(AutoCompleteTextView actv) {
         List<String> vacio = new ArrayList<>();
         vacio.add("Seleccione");
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, vacio);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-    }
-
-    /*private void guardarDireccion() {
-        String calle = etCalle.getText().toString().trim();
-        String referencia = etReferencia.getText().toString().trim();
-        String departamento = spinnerDepartamento.getSelectedItem().toString();
-        String provincia = spinnerProvincia.getSelectedItem().toString();
-        String distrito = spinnerDistrito.getSelectedItem().toString();
-
-        if (calle.isEmpty() || referencia.isEmpty() || departamento.equals("Seleccione") ||
-                provincia.equals("Seleccione") || distrito.equals("Seleccione")) {
-            Toast.makeText(this, "Complete todos los campos", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        // Aquí puedes hacer tu llamado API para guardar la dirección
-        Toast.makeText(this, "Dirección guardada correctamente", Toast.LENGTH_SHORT).show();
-        finish();
-    }*/
-
-    // Listener reutilizable para evitar repetir código
-    private abstract class SimpleOnItemSelectedListener implements android.widget.AdapterView.OnItemSelectedListener {
-        public abstract void onItemSelected(int position);
-
-        @Override
-        public void onItemSelected(android.widget.AdapterView<?> parent, android.view.View view, int position, long id) {
-            onItemSelected(position);
-        }
-
-        @Override
-        public void onNothingSelected(android.widget.AdapterView<?> parent) { }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, vacio);
+        actv.setAdapter(adapter);
+        actv.setText("Seleccione", false);
     }
 
     private void guardarDireccion() {
         String calle = etCalle.getText().toString().trim();
         String referencia = etReferencia.getText().toString().trim();
-        int esPrincipal = 1;
+        String departamento = spinnerDepartamento.getText().toString();
+        String provincia = spinnerProvincia.getText().toString();
+        String distrito = spinnerDistrito.getText().toString();
 
-        if (spinnerDepartamento.getSelectedItemPosition() == 0 ||
-                spinnerProvincia.getSelectedItemPosition() == 0 ||
-                spinnerDistrito.getSelectedItemPosition() == 0) {
+        if (calle.isEmpty() || referencia.isEmpty() ||
+                departamento.equals("Seleccione") ||
+                provincia.equals("Seleccione") ||
+                distrito.equals("Seleccione")) {
             Toast.makeText(this, "Complete todos los campos", Toast.LENGTH_SHORT).show();
-            Log.e("GUARDAR_DIRECCION", "Campos incompletos");
+            Log.e("GUARDAR_DIR", "Datos incompletos");
             return;
         }
 
-        int idDistrito = listaDistritos.get(spinnerDistrito.getSelectedItemPosition() - 1).getId_distrito();
+        int indexDistrito = adapterDistritos.getPosition(distrito) - 1;
 
-        SharedPreferences sharedPref;
-        sharedPref = getSharedPreferences("user_session", Context.MODE_PRIVATE);
-        int id_usuario = sharedPref.getInt("id_usuario", -1);
+        int idDistrito = listaDistritos.get(indexDistrito).getId_distrito();
 
-        DireccionRequest direccionRequest = new DireccionRequest(id_usuario, calle, idDistrito, referencia, esPrincipal);
-        Log.d("GUARDAR_DIRECCION", "Datos a enviar: " + direccionRequest.toString());
+        SharedPreferences prefs = getSharedPreferences("user_session", Context.MODE_PRIVATE);
+        int idUsuario = prefs.getInt("id_usuario", -1);
+        DireccionRequest req = new DireccionRequest(idUsuario, calle, idDistrito, referencia, 1);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://grupotres.pythonanywhere.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        PyAnyApi apiService = retrofit.create(PyAnyApi.class);
-
-        Call<GeneralResp> call = apiService.agregarDireccion(direccionRequest);
-
-        call.enqueue(new Callback<GeneralResp>() {
+        apiService.agregarDireccion(req).enqueue(new Callback<GeneralResp>() {
             @Override
             public void onResponse(Call<GeneralResp> call, Response<GeneralResp> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    Log.d("GUARDAR_DIRECCION", "Respuesta exitosa: " + response.body().getMessage());
-                    Toast.makeText(AgregarDireccionActivity.this, "Dirección guardada correctamente", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AgregarDireccionActivity.this, "Dirección guardada", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
-                    Log.e("GUARDAR_DIRECCION", "Error en la respuesta: " + response.code() + " - " + response.message());
-                    Toast.makeText(AgregarDireccionActivity.this, "Error al guardar dirección", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AgregarDireccionActivity.this, "Error al guardar", Toast.LENGTH_SHORT).show();
+                    Log.e("GUARDAR_DIR", "Error: " + response.code());
                 }
             }
-
             @Override
             public void onFailure(Call<GeneralResp> call, Throwable t) {
-                Log.e("GUARDAR_DIRECCION", "Error de conexión: " + t.getMessage());
-                Toast.makeText(AgregarDireccionActivity.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(AgregarDireccionActivity.this, "Error de conexión", Toast.LENGTH_SHORT).show();
+                Log.e("GUARDAR_DIR", t.getMessage(), t);
             }
         });
     }
-
-
 }
