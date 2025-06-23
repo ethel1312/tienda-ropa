@@ -94,10 +94,6 @@ public class IniciarActivity extends AppCompatActivity {
             }
 
             obtenerToken(username, password);
-
-            //Intent intent = new Intent(this, CarritoActivity.class);
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
         });
 
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -160,16 +156,16 @@ public class IniciarActivity extends AppCompatActivity {
                     editor.apply();
 
                     Log.d("USER_ID", String.valueOf(idUsuario));
+
+                    Intent intent = new Intent(IniciarActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+
                 } catch (Exception e){
                     e.printStackTrace();
                     Snackbar.make(mBtnIniciarSesion, "Error al decodificar el token", Snackbar.LENGTH_LONG).show();
                 }
 
-
-
-               /* Intent intent = new Intent(IniciarActivity.this, RegistrarActivity.class);
-                startActivity(intent);
-                finish();*/
             }
 
             @Override

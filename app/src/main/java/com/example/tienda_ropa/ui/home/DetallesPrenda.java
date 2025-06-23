@@ -62,6 +62,7 @@ public class DetallesPrenda extends AppCompatActivity {
         colorMap.put("Blanco", "#FFFFFF");
         colorMap.put("Verde", "#008000");
         colorMap.put("Amarillo", "#FFFF00");
+        colorMap.put("Rosado", "#FFC0CB");
         // Agrega más colores según lo que tengas en la BD
     }
 

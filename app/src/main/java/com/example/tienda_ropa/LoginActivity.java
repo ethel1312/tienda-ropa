@@ -20,6 +20,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
+import com.example.tienda_ropa.Interface.PyAnyApi;
+import com.example.tienda_ropa.model.AuthResp;
+import com.example.tienda_ropa.model.GeneralResp;
+import com.example.tienda_ropa.model.RegistrarUsuarioGoogleReq;
+import com.example.tienda_ropa.model.RegistrarUsuarioGoogleResp;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -38,6 +43,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -64,7 +75,20 @@ public class LoginActivity extends AppCompatActivity {
 //                                Glide.with(LoginActivity.this).load(Objects.requireNonNull(auth.getCurrentUser()).getPhotoUrl()).into(imageView);
 //                                name.setText(auth.getCurrentUser().getDisplayName());
 //                                mail.setText(auth.getCurrentUser().getEmail());
-                                Toast.makeText(LoginActivity.this, "Signed in successfully!", Toast.LENGTH_SHORT).show();
+
+                                GoogleSignInAccount cuentaGoogle = GoogleSignIn.getLastSignedInAccount(LoginActivity.this);
+                                if (cuentaGoogle != null) {
+                                    String nombre = cuentaGoogle.getDisplayName();
+                                    String email = cuentaGoogle.getEmail();
+
+                                    RegistrarUsuarioGoogleReq req = new RegistrarUsuarioGoogleReq();
+                                    req.setNombre(nombre);
+                                    req.setEmail(email);
+
+                                    registrarUsuarioGoogle(req);
+                                }
+
+                                Toast.makeText(LoginActivity.this, "¡Inicio de sesión exitoso!", Toast.LENGTH_SHORT).show();
 
                                 // Aquí lanzas MainActivity y cierras LoginActivity
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -163,4 +187,47 @@ public class LoginActivity extends AppCompatActivity {
             return insets;
         });
     }
+
+    private void registrarUsuarioGoogle(RegistrarUsuarioGoogleReq registrarUsuarioGoogleReq) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://grupotres.pythonanywhere.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        PyAnyApi pyAnyApi = retrofit.create(PyAnyApi.class);
+
+        Call<RegistrarUsuarioGoogleResp> call = pyAnyApi.registrarUsuarioGoogle(registrarUsuarioGoogleReq);
+
+        call.enqueue(new Callback<RegistrarUsuarioGoogleResp>() {
+            @Override
+            public void onResponse(Call<RegistrarUsuarioGoogleResp> call, Response<RegistrarUsuarioGoogleResp> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    RegistrarUsuarioGoogleResp resp = response.body();
+
+                    // Guardar datos en SharedPreferences
+                    getSharedPreferences("user_session", MODE_PRIVATE).edit()
+                            .putString("token", resp.getToken())
+                            .putString("username", resp.getUsername())
+                            .putInt("id_usuario", resp.getId_usuario())
+                            .apply();
+
+                    Toast.makeText(LoginActivity.this, "¡Inicio de sesión exitoso!", Toast.LENGTH_SHORT).show();
+
+                    // Ir a MainActivity
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(LoginActivity.this, "Error: No se pudo registrar con Google", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RegistrarUsuarioGoogleResp> call, Throwable throwable) {
+
+
+            }
+        });
+    }
+
 }
