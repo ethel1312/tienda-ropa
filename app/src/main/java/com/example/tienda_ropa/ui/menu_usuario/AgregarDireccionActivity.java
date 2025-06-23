@@ -42,6 +42,9 @@ public class AgregarDireccionActivity extends AppCompatActivity {
     private List<Departamento> listaDepartamentos;
     private List<Provincia> listaProvincias;
     private List<Distrito> listaDistritos;
+    String token;
+
+    private int idUsuario;
 
     private ArrayAdapter<String> adapterDepartamentos, adapterProvincias, adapterDistritos;
 
@@ -57,6 +60,10 @@ public class AgregarDireccionActivity extends AppCompatActivity {
         spinnerProvincia = findViewById(R.id.spinnerProvincia);
         spinnerDistrito = findViewById(R.id.spinnerDistrito);
         btnGuardarDireccion = findViewById(R.id.btnGuardarDireccion);
+
+        SharedPreferences prefs = getSharedPreferences("user_session", Context.MODE_PRIVATE);
+        idUsuario = prefs.getInt("id_usuario", -1);
+        token = prefs.getString("token", "");
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://grupotres.pythonanywhere.com/")
@@ -89,7 +96,7 @@ public class AgregarDireccionActivity extends AppCompatActivity {
     }
 
     private void cargarDepartamentos() {
-        apiService.obtenerDepartamentos().enqueue(new Callback<List<Departamento>>() {
+        apiService.obtenerDepartamentos("JWT "+token).enqueue(new Callback<List<Departamento>>() {
             @Override
             public void onResponse(Call<List<Departamento>> call, Response<List<Departamento>> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -117,7 +124,7 @@ public class AgregarDireccionActivity extends AppCompatActivity {
     }
 
     private void cargarProvincias(int idDepartamento) {
-        apiService.obtenerProvincias(new ParamsDepartamento(idDepartamento))
+        apiService.obtenerProvincias("JWT "+token,new ParamsDepartamento(idDepartamento))
                 .enqueue(new Callback<List<Provincia>>() {
                     @Override
                     public void onResponse(Call<List<Provincia>> call, Response<List<Provincia>> response) {
@@ -146,7 +153,7 @@ public class AgregarDireccionActivity extends AppCompatActivity {
     }
 
     private void cargarDistritos(int idProvincia) {
-        apiService.obtenerDistritos(new ParamsProvincia(idProvincia))
+        apiService.obtenerDistritos("JWT "+token,new ParamsProvincia(idProvincia))
                 .enqueue(new Callback<List<Distrito>>() {
                     @Override
                     public void onResponse(Call<List<Distrito>> call, Response<List<Distrito>> response) {
@@ -203,11 +210,10 @@ public class AgregarDireccionActivity extends AppCompatActivity {
 
         int idDistrito = listaDistritos.get(indexDistrito).getId_distrito();
 
-        SharedPreferences prefs = getSharedPreferences("user_session", Context.MODE_PRIVATE);
-        int idUsuario = prefs.getInt("id_usuario", -1);
+
         DireccionRequest req = new DireccionRequest(idUsuario, calle, idDistrito, referencia, 1);
 
-        apiService.agregarDireccion(req).enqueue(new Callback<GeneralResp>() {
+        apiService.agregarDireccion("JWT "+token,req).enqueue(new Callback<GeneralResp>() {
             @Override
             public void onResponse(Call<GeneralResp> call, Response<GeneralResp> response) {
                 if (response.isSuccessful() && response.body() != null) {
