@@ -21,6 +21,8 @@ import com.example.tienda_ropa.model.ParamsProvincia;
 import com.example.tienda_ropa.model.ParamsUsuario;
 import com.example.tienda_ropa.model.PrendaDetalleResp;
 import com.example.tienda_ropa.model.Provincia;
+import com.example.tienda_ropa.model.RegistrarUsuarioGoogleReq;
+import com.example.tienda_ropa.model.RegistrarUsuarioGoogleResp;
 import com.example.tienda_ropa.model.RegistrarUsuarioReq;
 import com.example.tienda_ropa.model.VerificarCodReq;
 import com.example.tienda_ropa.model.DireccionRequest;
@@ -39,8 +41,9 @@ public interface PyAnyApi {
     Call<AuthResp> obtenerToken(@Body AuthReq authReq);
 
     @POST("api_registrar_usuario")
-    Call<GeneralResp> registrarUsuario(
-                                    @Body RegistrarUsuarioReq registrarUsuarioReq);
+    Call<GeneralResp> registrarUsuario(@Body RegistrarUsuarioReq registrarUsuarioReq);
+    @POST("api_registrar_usuario_google")
+    Call<RegistrarUsuarioGoogleResp> registrarUsuarioGoogle(@Body RegistrarUsuarioGoogleReq registrarUsuarioGoogleReq);
     @POST("api_agregar_lista_deseos")
     Call<GeneralResp> agregarListaDeseos(@Header("Authorization") String authorization,
                                        @Body AgregarListaDeseosReq agregarListaDeseosReq);
