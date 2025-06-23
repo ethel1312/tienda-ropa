@@ -20,6 +20,23 @@
         <activity
             android:name=".ListaDeseosActivity"
             android:exported="false" />
+
+        <activity android:name=".PagoActivity"
+            android:exported="true"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="tiendaropa"
+                    android:host="verificar_pago" />
+            </intent-filter>
+        </activity>
+
+
+
+
         <activity
             android:name=".CarritoActivity"
             android:exported="false" />
@@ -53,6 +70,19 @@
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".ui.menu_usuario.MiCuentaActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.menu_usuario.MiDireccionActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.menu_usuario.AgregarDireccionActivity"
+            android:exported="false" />
+
         <activity
             android:name=".ui.home.SplashActivity"
             android:exported="true"

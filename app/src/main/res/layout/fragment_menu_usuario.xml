@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_cards"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center_horizontal"
+    android:layout_marginTop="50dp"
+    tools:context=".ui.menu_usuario.menu_usuario">
+
+    <GridLayout
+        android:id="@+id/grid_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:alignmentMode="alignMargins"
+        android:rowOrderPreserved="false"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:useDefaultMargins="true">
+
+        <!-- Card: Mi Cuenta -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btnMiCuenta"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:layout_margin="8dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_user"
+                    android:scaleType="centerInside"
+                    android:contentDescription="Icono Mi Cuenta" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MI CUENTA"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:layout_marginTop="8dp"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Administra tus datos personales y la configuración de tu cuenta"
+                    android:textSize="12sp"
+                    android:textColor="#666666"
+                    android:gravity="center"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btnMiDireccion"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:layout_margin="8dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_baseline_add_24"
+                    android:scaleType="centerInside"
+                    android:contentDescription="Icono Direcciones" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="DIRECCIONES"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:layout_marginTop="8dp"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Agrega o edita tus direcciones de envío"
+                    android:textSize="12sp"
+                    android:textColor="#666666"
+                    android:gravity="center"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </GridLayout>
+</LinearLayout>

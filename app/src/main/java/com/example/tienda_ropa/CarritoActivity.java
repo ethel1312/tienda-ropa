@@ -1,6 +1,7 @@
 package com.example.tienda_ropa;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -86,6 +87,12 @@ public class CarritoActivity extends AppCompatActivity implements OnCantidadChan
 
         mBotonVolver.setOnClickListener(v -> {
             finish();
+        });
+
+        mBtnVerificar.setOnClickListener(view -> {
+            Context context = view.getContext();
+            Intent intent = new Intent(context, PagoActivity.class);
+            context.startActivity(intent);
         });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {

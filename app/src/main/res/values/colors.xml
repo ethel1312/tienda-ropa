@@ -16,4 +16,12 @@
 <!--    HOME-->
     <color name="btnCategoriaColor">#F5F6FA</color>
 
+
+
+    <color name="colorFondo">#F5F5F5</color> <!-- gris claro -->
+    <color name="colorCard">#FFFFFF</color>  <!-- blanco -->
+    <color name="colorTextoPrincipal">#212121</color> <!-- negro casi puro -->
+    <color name="colorTextoSecundario">#757575</color> <!-- gris oscuro -->
+
+
 </resources>

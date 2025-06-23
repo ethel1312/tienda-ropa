@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ import com.example.tienda_ropa.R;
 import com.example.tienda_ropa.model.AgregarListaDeseosReq;
 import com.example.tienda_ropa.model.GeneralResp;
 import com.example.tienda_ropa.model.ObtenerPrendaResp;
+import com.example.tienda_ropa.model.ParamsCategoria;
 import com.example.tienda_ropa.model.PrendaApi;
 
 import java.util.ArrayList;
@@ -52,6 +54,11 @@ public class HomeFragment extends Fragment implements FavoritoHandler {
     int idUsuario;
     private List<PrendaEntry> prendaList;
     private PrendaCardRecyclerViewAdapterH adapter;
+
+
+    private Button btnTodos, btnHombres, btnMujeres;
+
+
 
 
 
@@ -109,6 +116,30 @@ public class HomeFragment extends Fragment implements FavoritoHandler {
         });
 
 
+
+        btnTodos = root.findViewById(R.id.btnTodos);
+        btnHombres = root.findViewById(R.id.btnHombres);
+        btnMujeres = root.findViewById(R.id.btnMujeres);
+
+
+
+        btnHombres.setOnClickListener(v -> {
+            prendaList.clear();
+            obtenerPrendaCateogoria(1);  // o el valor que acepte tu API
+        });
+
+        btnMujeres.setOnClickListener(v -> {
+            prendaList.clear();
+            obtenerPrendaCateogoria(2);
+        });
+
+        btnTodos.setOnClickListener(v -> {
+            prendaList.clear();
+            obtenerPrenda(); // carga todas las prendas
+        });
+
+
+
         return root;
 
     }
@@ -146,6 +177,49 @@ public class HomeFragment extends Fragment implements FavoritoHandler {
                     }
                 });
     }
+
+
+    private void obtenerPrendaCateogoria(int idCategoria) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://grupotres.pythonanywhere.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        PyAnyApi pyAnyApi = retrofit.create(PyAnyApi.class);
+
+        ParamsCategoria params = new ParamsCategoria(idCategoria);
+
+        Call<ObtenerPrendaResp> call = pyAnyApi.prendasPorCategoria("JWT " + token, params);
+        call.enqueue(new Callback<ObtenerPrendaResp>() {
+            @Override
+            public void onResponse(Call<ObtenerPrendaResp> call, Response<ObtenerPrendaResp> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    prendaList.clear(); // Limpiar antes de llenar
+                    List<PrendaApi> listaPrendas = response.body().getData();
+                    for (PrendaApi elemento : listaPrendas) {
+                        PrendaEntry prendaEntry = new PrendaEntry(
+                                elemento.getId_prenda(),
+                                elemento.getNomPrenda(),
+                                elemento.getPrecio(),
+                                elemento.getUrl_imagen(),
+                                elemento.isFavorito()
+                        );
+                        prendaList.add(prendaEntry);
+                    }
+                    adapter = new PrendaCardRecyclerViewAdapterH(prendaList, getContext(), HomeFragment.this);
+                    recyclerView.setAdapter(adapter);
+                } else {
+                    Toast.makeText(getContext(), "No se encontraron prendas.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ObtenerPrendaResp> call, Throwable t) {
+                Toast.makeText(getContext(), "Error en la conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     public void agregarAFavoritos(AgregarListaDeseosReq agregarListaDeseosReq) {
         Retrofit retrofit = new Retrofit.Builder()

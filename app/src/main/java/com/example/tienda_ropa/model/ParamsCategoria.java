@@ -6,4 +6,12 @@ public class ParamsCategoria {
     public ParamsCategoria(int idCategoria) {
         this.idCategoria = idCategoria;
     }
+
+    public int getIdCategoria() {
+        return idCategoria;
+    }
+
+    public void setIdCategoria(int idCategoria) {
+        this.idCategoria = idCategoria;
+    }
 }

@@ -8,11 +8,7 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.tienda_ropa.ui.home.HomeFragment"
-        tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_navigation_home_to_prenda_categoria"
-            app:destination="@id/prenda_categoria" />
-    </fragment>
+        tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -25,9 +21,10 @@
         tools:layout="@layout/fragment_carrito" />
 
     <fragment
-        android:id="@+id/prenda_categoria"
-        android:name="com.example.tienda_ropa.ui.home.PrendaCategoria"
-        tools:layout="@layout/fragment_prenda_por_categoria" />
+        android:id="@+id/menu_usuario"
+        android:name="com.example.tienda_ropa.ui.menu_usuario.menu_usuario"
+        android:label="fragment_menu_usuario"
+        tools:layout="@layout/fragment_menu_usuario" />
 
 
 </navigation>
