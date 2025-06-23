@@ -87,7 +87,6 @@
     </LinearLayout>
 
 
-
     <!-- RecyclerView para las tarjetas de prendas -->
     <androidx.core.widget.NestedScrollView
         android:id="@+id/disco_grid"

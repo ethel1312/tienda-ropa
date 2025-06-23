@@ -37,7 +37,6 @@ public class RegistrarActivity extends AppCompatActivity {
     TextInputEditText mEtPassword;
     TextInputEditText mEtEmail;
 
-
     SharedPreferences.Editor editor;
 
     @Override
