@@ -125,16 +125,16 @@ public class HomeFragment extends Fragment {
                             }
                             adapter = new PrendaCardRecyclerViewAdapterH(prendaList, getContext());
                             recyclerView.setAdapter(adapter);
-                        } else {
-                            Toast.makeText(getContext(), "Error en la respuesta de la API", Toast.LENGTH_SHORT).show();
-                        }
-                    }
+                } else {
+                    Toast.makeText(getContext(), "Error en la respuesta de la API", Toast.LENGTH_SHORT).show();
+                }
+            }
 
-                    @Override
-                    public void onFailure(Call<ObtenerPrendaResp> call, Throwable t) {
-                        Toast.makeText(getContext(), "Error en la conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+            @Override
+            public void onFailure(Call<ObtenerPrendaResp> call, Throwable t) {
+                Toast.makeText(getContext(), "Error en la conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
     }
