@@ -152,9 +152,10 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         mBtnCrearCuenta.setOnClickListener(v -> {
-            Intent intent = new Intent(this, RegistrarActivity.class);
-            startActivity((intent));
+            Intent intent = new Intent(LoginActivity.this, RegistrarActivity.class);
+            startActivity(intent);
         });
+
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

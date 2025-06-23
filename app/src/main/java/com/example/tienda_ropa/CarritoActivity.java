@@ -1,6 +1,7 @@
 package com.example.tienda_ropa;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,6 +50,7 @@ public class CarritoActivity extends AppCompatActivity implements OnCantidadChan
     MaterialTextView txtTotal;
     RecyclerView recyclerView;
     String token;
+    int idUsuario;
     private List<CarritoEntry> carritoList;
     private int conteo=0;
 
@@ -56,10 +58,13 @@ public class CarritoActivity extends AppCompatActivity implements OnCantidadChan
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sharedPref = this.getSharedPreferences("user_session", Context.MODE_PRIVATE);
-        //token= sharedPref.getString("token","");
-        token="JWT "+ "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3NTAwODc4MjYsImlhdCI6MTc1MDA4NzUyNiwibmJmIjoxNzUwMDg3NTI2LCJpZGVudGl0eSI6MX0.0Jkwe6W-uL0sHoU3e3uec_BZgtZyXIwVikMb2RPRSgc";
+        token= sharedPref.getString("token","");
+        idUsuario = sharedPref.getInt("id_usuario", 0);
 
-        getSupportActionBar().hide();
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
+
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_carrito);
 
@@ -84,6 +89,12 @@ public class CarritoActivity extends AppCompatActivity implements OnCantidadChan
             finish();
         });
 
+        mBtnVerificar.setOnClickListener(view -> {
+            Context context = view.getContext();
+            Intent intent = new Intent(context, PagoActivity.class);
+            context.startActivity(intent);
+        });
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -98,8 +109,8 @@ public class CarritoActivity extends AppCompatActivity implements OnCantidadChan
                 .build();
         PyAnyApi dambPyAnyApi = retrofit.create(PyAnyApi.class);
         Log.d("TOKEN_DEBUG", sharedPref.getString("token",""));
-        //Call<ObtenerCarritoResp> call=dambPyAnyApi.obtenerCarrito(1,"JWT "+sharedPref.getString("token",""));
-        Call<ObtenerCarritoResp> call=dambPyAnyApi.obtenerCarrito(1,token);
+        Call<ObtenerCarritoResp> call=dambPyAnyApi.obtenerCarrito("JWT " + token);
+
         call.enqueue(new Callback<ObtenerCarritoResp>() {
             @Override
             public void onResponse(Call<ObtenerCarritoResp> call, Response<ObtenerCarritoResp> response) {
@@ -115,7 +126,14 @@ public class CarritoActivity extends AppCompatActivity implements OnCantidadChan
                     actualizarInformacionPedido(listaCarrito);
                     carritoList= new ArrayList<>();
                     for(CarritoApi elemento: listaCarrito){
-                        CarritoEntry obj= new CarritoEntry(elemento.getUrl_imagen(), elemento.getNomPrenda() , elemento.getPrecio(),elemento.getCantidad(),elemento.getId_prenda());
+                        CarritoEntry obj= new CarritoEntry(
+                                elemento.getUrl_imagen(),
+                                elemento.getNomPrenda(),
+                                elemento.getPrecio(),
+                                elemento.getCantidad(),
+                                elemento.getId_prenda(),
+                                elemento.getTalla(),
+                                elemento.getStock());
                         carritoList.add(obj);
                     }
 
@@ -162,7 +180,7 @@ public class CarritoActivity extends AppCompatActivity implements OnCantidadChan
                 .build();
         PyAnyApi dambPyAnyApi = retrofit.create(PyAnyApi.class);
         ProductoCarritoReq obj= new ProductoCarritoReq();
-        obj.setId_usuario(1);
+        obj.setId_usuario(idUsuario);
         obj.setId_prenda(idPrenda);
         Call<GeneralResp> call=dambPyAnyApi.incrementarCantProduc(token,obj);
         call.enqueue(new Callback<GeneralResp>() {
@@ -186,7 +204,7 @@ public class CarritoActivity extends AppCompatActivity implements OnCantidadChan
                 .build();
         PyAnyApi dambPyAnyApi = retrofit.create(PyAnyApi.class);
         ProductoCarritoReq obj= new ProductoCarritoReq();
-        obj.setId_usuario(1);
+        obj.setId_usuario(idUsuario);
         obj.setId_prenda(idPrenda);
         Call<GeneralResp> call=dambPyAnyApi.disminuirCantProduc(token,obj);
         call.enqueue(new Callback<GeneralResp>() {
@@ -210,7 +228,7 @@ public class CarritoActivity extends AppCompatActivity implements OnCantidadChan
                 .build();
         PyAnyApi dambPyAnyApi = retrofit.create(PyAnyApi.class);
         ProductoCarritoReq obj= new ProductoCarritoReq();
-        obj.setId_usuario(1);
+        obj.setId_usuario(idUsuario);
         obj.setId_prenda(idPrenda);
         Call<GeneralResp> call=dambPyAnyApi.eliminarProduc(token,obj);
         call.enqueue(new Callback<GeneralResp>() {

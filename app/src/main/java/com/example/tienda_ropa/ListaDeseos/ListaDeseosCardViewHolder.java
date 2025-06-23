@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.example.tienda_ropa.R;
+import com.google.android.material.card.MaterialCardView;
 
 public class ListaDeseosCardViewHolder extends RecyclerView.ViewHolder{
     public NetworkImageView productoImage;
@@ -19,7 +20,8 @@ public class ListaDeseosCardViewHolder extends RecyclerView.ViewHolder{
     public int idPrenda;
     public Button btnAgregarCarrito;
     public ImageButton btnEliminar;
-
+    public TextView txtAgotado;
+    public MaterialCardView cardItem;
 
     public ListaDeseosCardViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -28,5 +30,7 @@ public class ListaDeseosCardViewHolder extends RecyclerView.ViewHolder{
         productoPrecio= itemView.findViewById(R.id.txtPrecioLD);
         btnAgregarCarrito=itemView.findViewById(R.id.btnAgregarLD);
         btnEliminar=itemView.findViewById(R.id.btnEliminarLD);
+        txtAgotado = itemView.findViewById(R.id.txtAgotado);
+        cardItem = itemView.findViewById(R.id.cardItem);
     }
 }
