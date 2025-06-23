@@ -6,13 +6,14 @@ public class PrendaEntry {
     public String nombre;
     public float precio;
     public String url;
-    //creamos un contrustor, donde pase lo sparametros correspondientes
+    public boolean isFavorito;
 
-    public PrendaEntry(int p_id,String p_nombre, float p_precio, String p_url){
+    public PrendaEntry(int p_id,String p_nombre, float p_precio, String p_url, boolean esFavorito){
         this.id = p_id;
         this.nombre = p_nombre;
         this.precio = p_precio;
         this.url = p_url;
+        this.isFavorito = esFavorito;
     }
 
 

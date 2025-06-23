@@ -1,6 +1,7 @@
 [versions]
 activityCompose = "1.10.1"
 agp = "8.9.0"
+checkout = "4.55.5"
 circleindicator ="2.1.6"
 credentials = "1.5.0"
 credentialsPlayServicesAuth = "1.6.0-alpha02"
@@ -30,6 +31,7 @@ googleGmsGoogleServices = "4.4.2"
 firebaseCommon = "21.0.0"
 
 [libraries]
+checkout = { module = "com.mercadopago.android.px:checkout", version.ref = "checkout" }
 circleindicator = { module = "me.relex:circleindicator", version.ref = "circleindicator" }
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
 com-google-firebase-firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "googleFirebaseBom" }

@@ -1,8 +1,10 @@
 package com.example.tienda_ropa.ListaDeseos;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +18,7 @@ import com.example.tienda_ropa.ObtenerCarrito.ImageRequester;
 import com.example.tienda_ropa.R;
 
 import com.example.tienda_ropa.model.ListaDeseosEntry;
+import com.example.tienda_ropa.ui.home.DetallesPrenda;
 
 import java.util.List;
 
@@ -49,6 +52,17 @@ public class ListaDeseosCardRecyclerViewAdapter extends RecyclerView.Adapter<Lis
             imageRequester.setImageFromUrl(holder.productoImage,producto.url_imagen);
             holder.idPrenda = producto.idPrenda;
 
+            if (producto.stock == 0) {
+                holder.txtAgotado.setVisibility(View.VISIBLE);
+                holder.cardItem.setAlpha(0.4f);
+                holder.cardItem.setEnabled(false);
+            } else {
+                holder.txtAgotado.setVisibility(View.GONE);
+                holder.cardItem.setAlpha(1f);
+                holder.cardItem.setEnabled(true);
+            }
+
+
             //CREAR FUNCIONES PARA BOTONES CON APIS
            holder.btnAgregarCarrito.setOnClickListener(v -> {
                 if (listener != null) {
@@ -60,6 +74,17 @@ public class ListaDeseosCardRecyclerViewAdapter extends RecyclerView.Adapter<Lis
                     listener.onEliminarProducto(holder.idPrenda);  // Notificar a la actividad
                 }
             });
+
+            holder.itemView.setOnClickListener(v -> {
+                // Obtén el ID de la prenda al hacer clic
+                int prendaId = producto.idPrenda;  // O usa el ID de la prenda directamente
+                // Crea el Intent para abrir el PrendaDetailActivity
+
+                Intent intent = new Intent(v.getContext(), DetallesPrenda.class);
+                intent.putExtra("prenda_id", prendaId);  // Envía el ID de la prenda seleccionada
+                v.getContext().startActivity(intent);  // Inicia la actividad de detalles
+            });
+
         }
     }
 

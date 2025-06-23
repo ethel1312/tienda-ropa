@@ -29,5 +29,26 @@
         <item name="hintTextColor">@color/purple_700</item>         <!-- Color del hint -->
     </style>
 
+    <style name="ColorCircleChip" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipMinHeight">25dp</item>
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="chipCornerRadius">24dp</item>
+        <item name="android:padding">0dp</item>
+        <item name="checkedIconVisible">false</item>
+        <item name="android:textSize">0sp</item>
+    </style>
+
+    <style name="ChipTallaEstilo" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@color/white</item>
+        <item name="chipStrokeColor">@color/black</item>
+        <item name="chipStrokeWidth">2dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:layout_width">64dp</item>
+        <item name="android:layout_height">64dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 
 </resources>

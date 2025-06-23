@@ -4,7 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    >
 
     <!-- Toolbar -->
     <com.google.android.material.appbar.MaterialToolbar
@@ -19,7 +22,8 @@
         app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
     <!-- Métodos de pago (iconos) -->
     <LinearLayout

@@ -13,12 +13,18 @@
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.tienda_ropa.ui.deseos.ListaDeseosFragment"
-        android:label="@string/Menu_favoritos"
         tools:layout="@layout/fragment_lista_deseos" />
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.example.tienda_ropa.ui.carrito.CarritoFragment"
-        android:label="@string/Menu_compras"
         tools:layout="@layout/fragment_carrito" />
+
+    <fragment
+        android:id="@+id/menu_usuario"
+        android:name="com.example.tienda_ropa.ui.menu_usuario.menu_usuario"
+        android:label="fragment_menu_usuario"
+        tools:layout="@layout/fragment_menu_usuario" />
+
+
 </navigation>

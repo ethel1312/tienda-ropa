@@ -5,6 +5,7 @@ public class ListaDeseosApi {
     private String url_imagen;
     private String nomPrenda;
     private String precio;
+    private int stock;
 
     public String getUrl_imagen() {
         return url_imagen;
@@ -20,5 +21,9 @@ public class ListaDeseosApi {
 
     public String getPrecio() {
         return precio;
+    }
+
+    public int getStock() {
+        return stock;
     }
 }

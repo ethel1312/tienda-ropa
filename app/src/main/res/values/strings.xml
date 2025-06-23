@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Tienda_Ropa</string>
+    <string name="app_name">URBANWEAR</string>
     <string name="Menu_casita">Inicio</string>
     <string name="Menu_favoritos">Favoritos</string>
     <string name="Menu_compras">Compras</string>
@@ -11,7 +11,7 @@
     <string name="informacion_pedido">Información de pedido</string>
     <string name="subtotal">Subtotal</string>
     <string name="envio">Costo de envío</string>
-    <string name="total">Total</string>
+    <string name="total">TOTAL</string>
     <string name="agregar">Agregar cantidad</string>
     <string name="disminuir">Disminuir cantidad</string>
     <string name="eliminar">Eliminar producto</string>
@@ -38,16 +38,7 @@
     <string name="desc_visa">boton Visa</string>
     <string name="desc_yape">boton Yape</string>
 
-    <string name="titulo_metodo_pago">Método de pago</string>
-    <string name="btn_agregar_metodo_pago">Agregar método de pago</string>
 
-    <!-- cards historial tarjetas -->
-    <string name="tipo_tarjeta">Visa </string>
-    <string name="text_numero_tarjeta">**** 1234 </string>
-    <string name="text_titular_tarjeta">Ethel Isamar Damián Inoñán</string>
-    <string name="text_fecha_vencimiento">11-2027</string>
-    <string name="btn_eliminar_tarjeta_historial">Eliminar tarjeta</string>
-    --------------------------------------------------
     <string name="val_strUsername">ethel1312</string>
     <string name="val_strPassword">ethel1312</string>
     <string name="client_id">261443689387-f2gqe3i91mnus973amgh09tqm9190vkm.apps.googleusercontent.com</string>
@@ -77,4 +68,10 @@
     <string name="direccion_calle">Nombre de la Calle/Dirección</string>
     <string name="direccion_info_adicional">Información adicional</string>
     <string name="btnEditarDireccion">Edit address</string>
+    <string name="agregar_a_favoritos">Agregar a favoritos</string>
+    <string name="titulo_lista_deseos">LISTA DE DESEOS</string>
+    <string name="titulo_carrito_de_compra">CARRITO DE COMPRA</string>
+    <string name="btn_pagar">PAGAR</string>
+    <string name="back">btn_volver</string>
+    <string name="usuario">Usuario</string>
 </resources>

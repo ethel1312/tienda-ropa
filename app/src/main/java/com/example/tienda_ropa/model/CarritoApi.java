@@ -4,9 +4,11 @@ public class CarritoApi {
     private int id_prenda;
     private String url_imagen;
     private String nomPrenda;
+    private String talla;
     private String precio;
     private int cantidad;
     private String total;
+    private int stock;
 
     public int getId_prenda() {
         return id_prenda;
@@ -19,7 +21,9 @@ public class CarritoApi {
     public String getNomPrenda() {
         return nomPrenda;
     }
-
+    public String getTalla() {
+        return talla;
+    }
     public String getPrecio() {
         return precio;
     }
@@ -30,5 +34,8 @@ public class CarritoApi {
 
     public String getTotal() {
         return total;
+    }
+    public int getStock() {
+        return stock;
     }
 }
