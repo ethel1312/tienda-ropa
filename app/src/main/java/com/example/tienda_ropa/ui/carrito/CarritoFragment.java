@@ -1,6 +1,7 @@
 package com.example.tienda_ropa.ui.carrito;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,12 +20,18 @@ import com.example.tienda_ropa.Interface.PyAnyApi;
 import com.example.tienda_ropa.ObtenerCarrito.CarritoCardRecyclerViewAdapter;
 import com.example.tienda_ropa.ObtenerCarrito.CarritoItemDecoration;
 import com.example.tienda_ropa.ObtenerCarrito.ProductoCarritoReq;
+import com.example.tienda_ropa.PagoActivity;
 import com.example.tienda_ropa.R;
 import com.example.tienda_ropa.databinding.FragmentCarritoBinding;
 import com.example.tienda_ropa.model.CarritoApi;
 import com.example.tienda_ropa.model.CarritoEntry;
+import com.example.tienda_ropa.model.DireccionesXid;
 import com.example.tienda_ropa.model.GeneralResp;
 import com.example.tienda_ropa.model.ObtenerCarritoResp;
+import com.example.tienda_ropa.model.ObtenerDirecciones;
+import com.example.tienda_ropa.model.ParamsUsuario;
+import com.example.tienda_ropa.ui.menu_usuario.adapter.DireccionAdapter;
+import com.example.tienda_ropa.ui.menu_usuario.adapter.DireccionesAdapterPago;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 
@@ -42,6 +49,7 @@ public class CarritoFragment extends Fragment implements OnCantidadChangeListene
     private FragmentCarritoBinding binding;
 
     SharedPreferences sharedPref;
+    ImageButton mBotonVolver;
     MaterialButton mBtnVerificar;
     MaterialTextView txtSubtotal;
     MaterialTextView txtIGV;
@@ -73,6 +81,13 @@ public class CarritoFragment extends Fragment implements OnCantidadChangeListene
         recyclerView = binding.recyclerView;
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+
+        mBtnVerificar.setOnClickListener(view -> {
+            obtenerYMostrarDirecciones(view.getContext());
+        });
+
+
 
         obtenerCarrito();
 
@@ -253,6 +268,65 @@ public class CarritoFragment extends Fragment implements OnCantidadChangeListene
         txtIGV.setText(String.format("S/. %.2f", igv));
         txtTotal.setText(String.format("S/. %.2f", totalConIGV));
     }
+
+    private void obtenerYMostrarDirecciones(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences("user_session", Context.MODE_PRIVATE);
+        int idUsuario = prefs.getInt("id_usuario", -1);
+
+        if (idUsuario == -1) {
+            Toast.makeText(context, "ID de usuario no encontrado", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://grupotres.pythonanywhere.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        PyAnyApi pyAnyApi = retrofit.create(PyAnyApi.class);
+        ParamsUsuario params = new ParamsUsuario(idUsuario);
+
+
+        Call<ObtenerDirecciones> call = pyAnyApi.obtenerDireccion("JWT " + token, params);
+
+        call.enqueue(new Callback<ObtenerDirecciones>() {
+            @Override
+            public void onResponse(Call<ObtenerDirecciones> call, Response<ObtenerDirecciones> response) {
+                if (response.isSuccessful() && response.body() != null && !response.body().getData().isEmpty()) {
+                    mostrarDialogoDirecciones(context, response.body().getData());
+                } else {
+                    Toast.makeText(context, "No se encontraron direcciones", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ObtenerDirecciones> call, Throwable t) {
+                Toast.makeText(context, "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    private void mostrarDialogoDirecciones(Context context, List<DireccionesXid> direcciones) {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context);
+        View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_lista_direcciones, null);
+        RecyclerView recyclerView = dialogView.findViewById(R.id.recyclerDireccionesModal);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+        DireccionesAdapterPago adapter = new DireccionesAdapterPago(context, direcciones, direccion -> {
+            Intent intent = new Intent(context, PagoActivity.class);
+            intent.putExtra("id_domicilio", direccion.getId_domicilio());
+            context.startActivity(intent);
+        });
+
+        recyclerView.setAdapter(adapter);
+
+        builder.setView(dialogView);
+        builder.setTitle("Selecciona una dirección");
+        builder.setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss());
+        builder.create().show();
+    }
+
 
     @Override
     public void onDestroyView() {

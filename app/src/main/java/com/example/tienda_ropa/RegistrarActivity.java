@@ -37,7 +37,6 @@ public class RegistrarActivity extends AppCompatActivity {
     TextInputEditText mEtPassword;
     TextInputEditText mEtEmail;
 
-    SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
 
     @Override
@@ -49,8 +48,6 @@ public class RegistrarActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_registrar);
 
-        sharedPref = this.getSharedPreferences("user_session", Context.MODE_PRIVATE);
-        editor = sharedPref.edit();
 
         btnBack = findViewById(R.id.btnBack);
         mBtnRegistrar = findViewById(R.id.btnRegistrar);
@@ -90,8 +87,7 @@ public class RegistrarActivity extends AppCompatActivity {
                 .build();
         PyAnyApi pyAnyApi = retrofit.create(PyAnyApi.class);
 
-        Call<GeneralResp> call = pyAnyApi.registrarUsuario("JWT " +
-                sharedPref.getString("token", ""), registrarUsuarioReq);
+        Call<GeneralResp> call = pyAnyApi.registrarUsuario(registrarUsuarioReq);
 
         call.enqueue(new Callback<GeneralResp>() {
             @Override

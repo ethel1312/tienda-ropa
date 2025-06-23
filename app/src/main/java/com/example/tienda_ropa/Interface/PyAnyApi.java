@@ -1,21 +1,38 @@
 package com.example.tienda_ropa.Interface;
 
 import com.example.tienda_ropa.ObtenerCarrito.ProductoCarritoReq;
+
 import com.example.tienda_ropa.model.AgregarAlCarritoReq;
 import com.example.tienda_ropa.model.AgregarListaDeseosReq;
 import com.example.tienda_ropa.model.AuthReq;
 import com.example.tienda_ropa.model.AuthResp;
+import com.example.tienda_ropa.model.Departamento;
+import com.example.tienda_ropa.model.Distrito;
+
 import com.example.tienda_ropa.model.EmailReq;
 import com.example.tienda_ropa.model.GeneralResp;
 import com.example.tienda_ropa.model.ObtenerCarritoResp;
+import com.example.tienda_ropa.model.ObtenerDirecciones;
 import com.example.tienda_ropa.model.ObtenerListaDeseosResp;
 import com.example.tienda_ropa.model.ModificarContraReq;
 import com.example.tienda_ropa.model.ObtenerPrendaResp;
+import com.example.tienda_ropa.model.ObtenerUsuario;
 import com.example.tienda_ropa.model.ParamsCategoria;
+import com.example.tienda_ropa.model.ParamsDepartamento;
+import com.example.tienda_ropa.model.ParamsProvincia;
+import com.example.tienda_ropa.model.ParamsUsuario;
 import com.example.tienda_ropa.model.PrendaDetalleResp;
-import com.example.tienda_ropa.model.PrendaResponse;
+import com.example.tienda_ropa.model.Provincia;
+import com.example.tienda_ropa.model.RegistrarUsuarioGoogleReq;
+import com.example.tienda_ropa.model.RegistrarUsuarioGoogleResp;
 import com.example.tienda_ropa.model.RegistrarUsuarioReq;
+import com.example.tienda_ropa.model.Ubigeo;
 import com.example.tienda_ropa.model.VerificarCodReq;
+import com.example.tienda_ropa.model.DireccionRequest;
+import java.util.List;
+
+import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -30,8 +47,9 @@ public interface PyAnyApi {
     Call<AuthResp> obtenerToken(@Body AuthReq authReq);
 
     @POST("api_registrar_usuario")
-    Call<GeneralResp> registrarUsuario(@Header("Authorization") String authorization,
-                                    @Body RegistrarUsuarioReq registrarUsuarioReq);
+    Call<GeneralResp> registrarUsuario(@Body RegistrarUsuarioReq registrarUsuarioReq);
+    @POST("api_registrar_usuario_google")
+    Call<RegistrarUsuarioGoogleResp> registrarUsuarioGoogle(@Body RegistrarUsuarioGoogleReq registrarUsuarioGoogleReq);
     @POST("api_agregar_lista_deseos")
     Call<GeneralResp> agregarListaDeseos(@Header("Authorization") String authorization,
                                        @Body AgregarListaDeseosReq agregarListaDeseosReq);
@@ -56,11 +74,13 @@ public interface PyAnyApi {
     Call<ObtenerListaDeseosResp> obtenerListaDeseos(@Header("Authorization") String authorization);
 
     @POST("api_mover_a_carrito")
-    Call<GeneralResp> moverAcarrito(@Header("Authorization") String authorization, @Body ProductoCarritoReq productoCarritoReq);
+    Call<GeneralResp> moverAcarrito(@Header("Authorization") String authorization,
+                                    @Body ProductoCarritoReq productoCarritoReq);
 
     // API para eliminar producto de la lista de deseos
     @POST("api_eliminar_lista_deseos")
-    Call<GeneralResp> eliminarDeListaDeseos(@Header("Authorization") String authorization, @Body ProductoCarritoReq productoCarritoReq);
+    Call<GeneralResp> eliminarDeListaDeseos(@Header("Authorization") String authorization,
+                                            @Body ProductoCarritoReq productoCarritoReq);
 
     @GET("api_obtenerprendas_inicio")
     Call<ObtenerPrendaResp> obtenerPrendas(@Header("Authorization") String authorization);
@@ -80,7 +100,34 @@ public interface PyAnyApi {
     Call<GeneralResp> actualizar_password(@Body ModificarContraReq modificarContraReq);
 
     @POST("api_prendas_por_categoria")
-    Call<PrendaResponse> prendasPorCategoria(
+    Call<ObtenerPrendaResp> prendasPorCategoria(
             @Header("Authorization") String authorization,
             @Body ParamsCategoria paramsCategoria);
+
+
+    @POST("api_obtener_usuario_x_id")
+    Call<ObtenerUsuario> obtenerUsuario(@Body ParamsUsuario paramsUsuario);
+
+    @POST("api_obtener_direcciones_usuario")
+    Call<ObtenerDirecciones> obtenerDireccion(@Header("Authorization") String authorization,
+                                              @Body ParamsUsuario paramsUsuario);
+
+    @GET("api_obtener_departamento")
+    Call<List<Departamento>> obtenerDepartamentos(@Header("Authorization") String authorization);
+
+    @POST("api_obtener_provincia")
+    Call<List<Provincia>> obtenerProvincias(@Header("Authorization") String authorization,
+                                            @Body ParamsDepartamento paramsDepartamento);
+
+    @POST("api_obtener_distrito")
+    Call<List<Distrito>> obtenerDistritos(@Header("Authorization") String authorization,
+                                          @Body ParamsProvincia paramsProvincia);
+
+
+    @POST("api_agregar_direccion")
+    Call<GeneralResp> agregarDireccion(@Header("Authorization") String authorization,
+                                       @Body DireccionRequest direccionRequest);
+
+
+
 }

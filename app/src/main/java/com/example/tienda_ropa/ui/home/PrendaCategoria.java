@@ -76,10 +76,10 @@ public class PrendaCategoria extends Fragment  implements FavoritoHandler{
         indicatorLayout.setText("Categoría: " + categoria.toUpperCase());
         Bundle args = new Bundle();
         int id_categoria = args.getInt("id_categoria");
-        obtenerPrendaPorCategoria(id_categoria);
+        //obtenerPrendaPorCategoria(id_categoria);
     }
 
-    private void obtenerPrendaPorCategoria(int id_categoria) {
+    /*private void obtenerPrendaPorCategoria(int id_categoria) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://grupotres.pythonanywhere.com/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -121,7 +121,7 @@ public class PrendaCategoria extends Fragment  implements FavoritoHandler{
 
 
         });
-    }
+    }*/
 
     @Override
     public void agregarAFavoritos(AgregarListaDeseosReq req) {

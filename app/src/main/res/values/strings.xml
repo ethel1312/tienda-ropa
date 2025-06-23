@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Tienda_Ropa</string>
+    <string name="app_name">URBANWAE</string>
     <string name="Menu_casita">Inicio</string>
     <string name="Menu_favoritos">Favoritos</string>
     <string name="Menu_compras">Compras</string>
@@ -39,8 +39,6 @@
     <string name="desc_yape">boton Yape</string>
 
 
-
-
     <string name="val_strUsername">ethel1312</string>
     <string name="val_strPassword">ethel1312</string>
     <string name="client_id">261443689387-f2gqe3i91mnus973amgh09tqm9190vkm.apps.googleusercontent.com</string>
@@ -75,4 +73,5 @@
     <string name="titulo_carrito_de_compra">CARRITO DE COMPRA</string>
     <string name="btn_pagar">PAGAR</string>
     <string name="back">btn_volver</string>
+    <string name="usuario">Usuario</string>
 </resources>
