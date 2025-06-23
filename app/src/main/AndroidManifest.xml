@@ -71,6 +71,7 @@
             android:name=".LoginActivity"
             android:exported="false" />
 
+
         <activity
             android:name=".ui.menu_usuario.MiCuentaActivity"
             android:exported="false" />
@@ -83,6 +84,7 @@
             android:name=".ui.menu_usuario.AgregarDireccionActivity"
             android:exported="false" />
 
+
         <activity
             android:name=".ui.home.SplashActivity"
             android:exported="true"
@@ -92,6 +94,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        -->
 
         <activity
             android:name=".MainActivity"
@@ -102,4 +105,3 @@
     </application>
 
 </manifest>
-
