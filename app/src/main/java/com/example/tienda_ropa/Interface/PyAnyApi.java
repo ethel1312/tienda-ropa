@@ -74,11 +74,13 @@ public interface PyAnyApi {
     Call<ObtenerListaDeseosResp> obtenerListaDeseos(@Header("Authorization") String authorization);
 
     @POST("api_mover_a_carrito")
-    Call<GeneralResp> moverAcarrito(@Header("Authorization") String authorization, @Body ProductoCarritoReq productoCarritoReq);
+    Call<GeneralResp> moverAcarrito(@Header("Authorization") String authorization,
+                                    @Body ProductoCarritoReq productoCarritoReq);
 
     // API para eliminar producto de la lista de deseos
     @POST("api_eliminar_lista_deseos")
-    Call<GeneralResp> eliminarDeListaDeseos(@Header("Authorization") String authorization, @Body ProductoCarritoReq productoCarritoReq);
+    Call<GeneralResp> eliminarDeListaDeseos(@Header("Authorization") String authorization,
+                                            @Body ProductoCarritoReq productoCarritoReq);
 
     @GET("api_obtenerprendas_inicio")
     Call<ObtenerPrendaResp> obtenerPrendas(@Header("Authorization") String authorization);
@@ -107,20 +109,24 @@ public interface PyAnyApi {
     Call<ObtenerUsuario> obtenerUsuario(@Body ParamsUsuario paramsUsuario);
 
     @POST("api_obtener_direcciones_usuario")
-    Call<ObtenerDirecciones> obtenerDireccion(@Body ParamsUsuario paramsUsuario);
+    Call<ObtenerDirecciones> obtenerDireccion(@Header("Authorization") String authorization,
+                                              @Body ParamsUsuario paramsUsuario);
 
     @GET("api_obtener_departamento")
-    Call<List<Departamento>> obtenerDepartamentos();
+    Call<List<Departamento>> obtenerDepartamentos(@Header("Authorization") String authorization);
 
     @POST("api_obtener_provincia")
-    Call<List<Provincia>> obtenerProvincias(@Body ParamsDepartamento paramsDepartamento);
+    Call<List<Provincia>> obtenerProvincias(@Header("Authorization") String authorization,
+                                            @Body ParamsDepartamento paramsDepartamento);
 
     @POST("api_obtener_distrito")
-    Call<List<Distrito>> obtenerDistritos(@Body ParamsProvincia paramsProvincia);
+    Call<List<Distrito>> obtenerDistritos(@Header("Authorization") String authorization,
+                                          @Body ParamsProvincia paramsProvincia);
 
 
     @POST("api_agregar_direccion")
-    Call<GeneralResp> agregarDireccion(@Body DireccionRequest direccionRequest);
+    Call<GeneralResp> agregarDireccion(@Header("Authorization") String authorization,
+                                       @Body DireccionRequest direccionRequest);
 
 
 

@@ -287,7 +287,8 @@ public class CarritoFragment extends Fragment implements OnCantidadChangeListene
         PyAnyApi pyAnyApi = retrofit.create(PyAnyApi.class);
         ParamsUsuario params = new ParamsUsuario(idUsuario);
 
-        Call<ObtenerDirecciones> call = pyAnyApi.obtenerDireccion(params);
+
+        Call<ObtenerDirecciones> call = pyAnyApi.obtenerDireccion("JWT " + token, params);
 
         call.enqueue(new Callback<ObtenerDirecciones>() {
             @Override

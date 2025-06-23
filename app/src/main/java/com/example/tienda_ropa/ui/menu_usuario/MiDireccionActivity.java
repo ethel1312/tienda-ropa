@@ -36,6 +36,8 @@ public class MiDireccionActivity extends AppCompatActivity {
     private SharedPreferences sharedPref;
     private int idUsuario;
 
+    String token;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +49,7 @@ public class MiDireccionActivity extends AppCompatActivity {
 
         sharedPref = getSharedPreferences("user_session", Context.MODE_PRIVATE);
         idUsuario = sharedPref.getInt("id_usuario", -1);
+        token = sharedPref.getString("token", "");
 
         btnAgregar.setOnClickListener(v -> {
             Intent intent = new Intent(MiDireccionActivity.this, AgregarDireccionActivity.class);
@@ -76,7 +79,7 @@ public class MiDireccionActivity extends AppCompatActivity {
         PyAnyApi pyAnyApi = retrofit.create(PyAnyApi.class);
         ParamsUsuario params = new ParamsUsuario(idUsuario);
 
-        Call<ObtenerDirecciones> call = pyAnyApi.obtenerDireccion(params);
+        Call<ObtenerDirecciones> call = pyAnyApi.obtenerDireccion("JWT " + token,params);
 
         call.enqueue(new Callback<ObtenerDirecciones>() {
             @Override
