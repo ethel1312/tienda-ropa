@@ -62,7 +62,6 @@ dependencies {
     implementation(libs.picasso)
     implementation(libs.circleindicator)
 
-
     //Google
     implementation (libs.credentials.v160alpha02)
     implementation (libs.credentials.play.services.auth.v160alpha02)
@@ -75,6 +74,5 @@ dependencies {
     implementation(libs.play.services.auth)
 
     //FireBase
-    implementation(libs.google.firebase.auth) // Usa la última versión disponible
-
+    implementation(libs.google.firebase.auth)
 }

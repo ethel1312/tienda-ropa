@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -43,7 +42,6 @@ public class CarritoFragment extends Fragment implements OnCantidadChangeListene
     private FragmentCarritoBinding binding;
 
     SharedPreferences sharedPref;
-    ImageButton mBotonVolver;
     MaterialButton mBtnVerificar;
     MaterialTextView txtSubtotal;
     MaterialTextView txtIGV;
@@ -65,7 +63,7 @@ public class CarritoFragment extends Fragment implements OnCantidadChangeListene
         token = sharedPref.getString("token", "");
         idUsuario = sharedPref.getInt("id_usuario", 0);
 
-        mBtnVerificar= binding.btnVerificar;
+        mBtnVerificar = binding.btnVerificar;
 
         txtSubtotal = binding.txtSubtotal;
         txtIGV = binding.txtIGV;
@@ -75,8 +73,6 @@ public class CarritoFragment extends Fragment implements OnCantidadChangeListene
         recyclerView = binding.recyclerView;
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-
-
 
         obtenerCarrito();
 
