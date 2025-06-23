@@ -92,8 +92,6 @@ public class IniciarActivity extends AppCompatActivity {
                 return;
             }
 
-
-
             obtenerToken(username, password);
 
         });
