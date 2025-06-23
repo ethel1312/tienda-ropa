@@ -1,6 +1,7 @@
 package com.example.tienda_ropa.model;
 
 public class DireccionRequest {
+
     private int id_usuario;
     private String calle;
     private int id_distrito;
@@ -54,4 +55,5 @@ public class DireccionRequest {
     public void setId_usuario(int id_usuario) {
         this.id_usuario = id_usuario;
     }
+
 }

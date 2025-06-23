@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorFondo"
+    android:background="@color/white"
     android:padding="16dp"
     tools:context=".ui.menu_usuario.AgregarDireccionActivity">
 
@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="AGREGAR DIRECCION"
+        android:text="Registrar Dirección"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -37,16 +37,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:paddingTop="25dp"
+            >
 
             <!-- Campo Calle -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Calle"
-                android:textSize="15sp"
-                android:textColor="@color/colorTextoPrincipal"
-                android:layout_marginBottom="4dp" />
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -61,13 +56,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Campo Referencia -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Referencia"
-                android:textSize="15sp"
-                android:textColor="@color/colorTextoPrincipal"
-                android:layout_marginBottom="4dp" />
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -82,49 +71,58 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Spinner Departamento -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Departamento"
-                android:textSize="15sp"
-                android:textColor="@color/colorTextoPrincipal"
-                android:layout_marginBottom="4dp" />
-
-            <Spinner
-                android:id="@+id/spinnerDepartamento"
+            <!-- Spinner Departamento -->
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp" />
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:hint="Departamento"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+                <AutoCompleteTextView
+                    android:id="@+id/spinnerDepartamento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:textColor="@color/black"
+                    android:dropDownVerticalOffset="8dp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Spinner Provincia -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Provincia"
-                android:textSize="15sp"
-                android:textColor="@color/colorTextoPrincipal"
-                android:layout_marginBottom="4dp" />
-
-            <Spinner
-                android:id="@+id/spinnerProvincia"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp" />
+                android:layout_marginBottom="16dp"
+                android:hint="Provincia"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+                <AutoCompleteTextView
+                    android:id="@+id/spinnerProvincia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:textColor="@color/black"
+                    android:dropDownVerticalOffset="8dp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Spinner Distrito -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Distrito"
-                android:textSize="14sp"
-                android:textColor="@color/colorTextoPrincipal"
-                android:layout_marginBottom="4dp" />
-
-            <Spinner
-                android:id="@+id/spinnerDistrito"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp" />
+                android:layout_marginBottom="24dp"
+                android:hint="Distrito"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+                <AutoCompleteTextView
+                    android:id="@+id/spinnerDistrito"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:textColor="@color/black"
+                    android:dropDownVerticalOffset="8dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <!-- Botón Guardar -->
             <com.google.android.material.button.MaterialButton
