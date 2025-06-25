@@ -23,6 +23,7 @@ import com.example.tienda_ropa.model.ParamsProvincia;
 import com.example.tienda_ropa.model.ParamsUsuario;
 import com.example.tienda_ropa.model.PrendaDetalleResp;
 import com.example.tienda_ropa.model.Provincia;
+import com.example.tienda_ropa.model.RatingReq;
 import com.example.tienda_ropa.model.RegistrarUsuarioGoogleReq;
 import com.example.tienda_ropa.model.RegistrarUsuarioGoogleResp;
 import com.example.tienda_ropa.model.RegistrarUsuarioReq;
@@ -56,6 +57,9 @@ public interface PyAnyApi {
     @POST("api_agregar_carrito")
     Call<GeneralResp> agregarAlCarrito(@Header("Authorization") String authorization,
                                          @Body AgregarAlCarritoReq agregarAlCarritoReq);
+    @POST("api_registrar_rating")
+    Call<GeneralResp> registrarRating(@Header("Authorization") String authorization,
+                                      @Body RatingReq ratingReq);
     @GET("api_obtener_carrito")
     Call<ObtenerCarritoResp> obtenerCarrito(@Header("Authorization") String authorization);
 

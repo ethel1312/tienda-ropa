@@ -115,6 +115,16 @@
                 app:selectionRequired="true"
                 app:chipSpacing="8dp"/>
 
+            <!-- Botón -->
+            <Button
+                android:id="@+id/agregarCarritoButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:backgroundTint="@android:color/black"
+                android:text="Agregar al carrito"
+                android:textColor="@android:color/white"/>
+
             <TextView
                 android:id="@+id/textView6"
                 android:layout_width="wrap_content"
@@ -129,16 +139,189 @@
                 android:layout_marginTop="8dp"
                 android:text="Descripción completa..." />
 
-            <!-- Botón -->
-            <Button
-                android:id="@+id/agregarCarritoButton"
+            <!-- Tarjeta - Reseñas de Clientes -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardResenas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:backgroundTint="@android:color/black"
-                android:text="Agregar al carrito"
-                android:textColor="@android:color/white"/>
-        </LinearLayout>
+                app:cardElevation="2dp"
+                app:cardCornerRadius="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:gravity="center_horizontal">
+
+                    <!-- Título -->
+                    <TextView
+                        android:id="@+id/txtTituloResenas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Reseñas de Clientes"
+                        android:textAppearance="?attr/textAppearanceHeadline6"
+                        android:textStyle="bold"
+                        android:textColor="@color/black" />
+
+                    <!-- Rating promedio (solo-lectura) -->
+                    <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                        android:id="@+id/ratingBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:isIndicator="true"
+                        android:numStars="5"
+                        android:stepSize="1"
+                        android:rating="0"
+                        app:mrb_progressTint="@color/starFilled"
+                        app:mrb_secondaryProgressTint="@color/starEmpty" />
+
+                    <!-- Texto cuando aún no hay reseñas -->
+                    <TextView
+                        android:id="@+id/txtTotalRatings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Sin reseñas"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <!-- Botón para escribir una reseña -->
+                    <Button
+                        android:id="@+id/btnEscribirResena"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:backgroundTint="@android:color/black"
+                        android:text="@string/btn_escribir_una_rese_a"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/white" />
+
+                    <!-- ═══════════  EDITOR OCULTO  ═══════════ -->
+                    <LinearLayout
+                        android:id="@+id/layoutEditorResena"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        android:gravity="center_horizontal"
+                        android:layout_marginTop="16dp">
+
+                        <TextView
+                            android:id="@+id/txtTituloEscribirResenas"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Escribir una reseña"
+                            android:textAppearance="?attr/textAppearanceHeadline6"
+                            android:textStyle="bold"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/txtCalificación"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="CALIFICACIÓN"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
+
+                        <!-- Rating editable -->
+                        <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                            android:id="@+id/ratingBarEditor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:numStars="5"
+                            android:stepSize="1"
+                            android:rating="0"
+                            app:mrb_progressTint="@color/starFilled"
+                            app:mrb_secondaryProgressTint="@color/starEmpty" />
+
+                        <!-- Comentario -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/edtComentario"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Escribe tu opinión"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <!-- Botones ENVIAR / CANCELAR -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="16dp"
+                            android:gravity="center"
+                            android:weightSum="2">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnCancelarResena"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginEnd="8dp"
+                                android:text="Cancelar"
+                                android:backgroundTint="@color/white"
+                                android:textColor="@android:color/black"/>
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnEnviarResena"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="8dp"
+                                android:text="Enviar reseña"
+                                android:backgroundTint="@android:color/black"
+                                android:textColor="@android:color/white"/>
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ═══════════  TARJETA - COMENTARIOS  ═══════════ -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardComentarios"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:visibility="gone"
+                app:cardElevation="2dp"
+                app:cardCornerRadius="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Título -->
+                <TextView
+                    android:id="@+id/tituloComentarios"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Comentarios y valoraciones"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
+
+                <!-- Lista de comentarios -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerComentarios"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

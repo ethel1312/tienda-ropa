@@ -1,6 +1,8 @@
 package com.example.tienda_ropa.model;
 
 
+import com.example.tienda_ropa.comentarios.ComentarioEntry;
+
 import java.util.List;
 
 public class PrendaApi {
@@ -12,6 +14,10 @@ public class PrendaApi {
     private int es_favorito;
     private List<TallaApi> tallas;
     private List<ColorApi> colores;
+    private List<ComentarioEntry> comentarios;
+    private float promedio_rating;
+    private int total_ratings;
+    private int mi_rating;
 
     public int getId_prenda() {
         return id_prenda;
@@ -43,5 +49,21 @@ public class PrendaApi {
 
     public List<ColorApi> getColores() {
         return colores;
+    }
+
+    public List<ComentarioEntry> getComentarios() {
+        return comentarios;
+    }
+
+    public float getPromedio_rating() {
+        return promedio_rating;
+    }
+
+    public int getTotal_ratings() {
+        return total_ratings;
+    }
+
+    public int getMi_rating() {
+        return mi_rating;
     }
 }

@@ -49,7 +49,6 @@ public class CarritoFragment extends Fragment implements OnCantidadChangeListene
     private FragmentCarritoBinding binding;
 
     SharedPreferences sharedPref;
-    ImageButton mBotonVolver;
     MaterialButton mBtnVerificar;
     MaterialTextView txtSubtotal;
     MaterialTextView txtIGV;

@@ -12,7 +12,9 @@
     <color name="gris">#808080</color>
     <color name="productGridBackgroundColor">#FFFFFFFF</color>
     <color name="grey_100">#F5F5F5</color>
-<!--    HOME-->
+    <color name="verdeVerificado">#4CAF50</color>
+
+    <!--    HOME-->
     <color name="btnCategoriaColor">#F5F6FA</color>
 
 
@@ -21,5 +23,7 @@
     <color name="colorTextoPrincipal">#212121</color> <!-- negro casi puro -->
     <color name="colorTextoSecundario">#757575</color> <!-- gris oscuro -->
 
+    <color name="starFilled">#FFC107</color>   <!-- amarillo -->
+    <color name="starEmpty">#E0E0E0</color>    <!-- gris claro -->
 
 </resources>

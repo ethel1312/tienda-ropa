@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.volley)
     implementation(libs.picasso)
     implementation(libs.circleindicator)
+    implementation(libs.library)
 
 
     //Google

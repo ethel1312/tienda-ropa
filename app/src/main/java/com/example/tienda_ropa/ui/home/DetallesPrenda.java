@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,24 +19,35 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.example.tienda_ropa.Interface.PyAnyApi;
 import com.example.tienda_ropa.R;
+import com.example.tienda_ropa.comentarios.ComentarioAdapter;
+import com.example.tienda_ropa.comentarios.ComentarioEntry;
 import com.example.tienda_ropa.model.AgregarAlCarritoReq;
 import com.example.tienda_ropa.model.ColorApi;
 import com.example.tienda_ropa.model.GeneralResp;
+import com.example.tienda_ropa.model.RatingReq;
 import com.example.tienda_ropa.model.TallaApi;
 import com.example.tienda_ropa.ui.home.ImageRequester;
 import com.example.tienda_ropa.model.ObtenerPrendaResp;
 import com.example.tienda_ropa.model.PrendaApi;
 import com.example.tienda_ropa.model.PrendaDetalleResp;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
+import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -53,6 +66,14 @@ public class DetallesPrenda extends AppCompatActivity {
     ChipGroup chipGroupTallas;
     ChipGroup chipGroupColores;
     Button agregarCarritoButton;
+    MaterialRatingBar ratingBarAvg;
+    TextView  txtTotalRatings;
+    Button btnEscribirResena;
+    LinearLayout layoutEditor;
+    MaterialRatingBar ratingBarEditor;
+    TextInputEditText edtComentario;
+    private MaterialButton btnEnviarResena, btnCancelarResena;
+    private List<ComentarioEntry> comentarioList;
     ImageButton btnAtras;
     private static final Map<String, String> colorMap = new HashMap<>();
     static {
@@ -86,7 +107,15 @@ public class DetallesPrenda extends AppCompatActivity {
         agregarCarritoButton = findViewById(R.id.agregarCarritoButton);
         btnAtras = findViewById(R.id.btnAtras);
 
-
+        //RESEÑA
+        ratingBarAvg = findViewById(R.id.ratingBar);
+        txtTotalRatings  = findViewById(R.id.txtTotalRatings);
+        btnEscribirResena = findViewById(R.id.btnEscribirResena);
+        layoutEditor      = findViewById(R.id.layoutEditorResena);
+        ratingBarEditor   = findViewById(R.id.ratingBarEditor);
+        edtComentario     = findViewById(R.id.edtComentario);
+        btnEnviarResena   = findViewById(R.id.btnEnviarResena);
+        btnCancelarResena = findViewById(R.id.btnCancelarResena);
 
         // Obtener el aidi
         prendaId = getIntent().getIntExtra("prenda_id", -1);
@@ -103,6 +132,19 @@ public class DetallesPrenda extends AppCompatActivity {
                 finish();
             }
         });
+
+        btnEscribirResena.setOnClickListener(v -> {
+            btnEscribirResena.setVisibility(View.GONE);
+            layoutEditor.setVisibility(View.VISIBLE);
+        });
+
+        btnCancelarResena.setOnClickListener(v -> {
+            layoutEditor.setVisibility(View.GONE);
+            btnEscribirResena.setVisibility(View.VISIBLE);
+            ratingBarEditor.setRating(0f);
+            edtComentario.setText("");
+        });
+
 
         agregarCarritoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,6 +178,27 @@ public class DetallesPrenda extends AppCompatActivity {
                 req.setCantidad(1);
 
                 agregarAlCarrito(req);
+            }
+        });
+
+        btnEnviarResena.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int estrellas = (int) ratingBarEditor.getRating();
+                if (estrellas == 0) {
+                    Toast.makeText(DetallesPrenda.this, "Selecciona al menos una estrella", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                String comentario = edtComentario.getText() != null
+                        ? edtComentario.getText().toString().trim()
+                        : "";
+
+                RatingReq req = new RatingReq();
+                req.setId_prenda(prendaId);
+                req.setEstrellas(estrellas);
+                req.setComentario(comentario);
+                registrarRating(req);
             }
         });
 
@@ -204,6 +267,43 @@ public class DetallesPrenda extends AppCompatActivity {
                     chipGroupColores.addView(chip);
                 }
 
+                // Rating
+                ratingBarAvg.setRating(prenda.getPromedio_rating());
+
+                if (prenda.getTotal_ratings() == 0) {
+                    txtTotalRatings.setText("Sin reseñas");
+                } else {
+                    Locale localeES = new Locale("es", "ES");
+                    // Ej: "4.2 · 23 reseñas"
+                    txtTotalRatings.setText(
+                            String.format(localeES, "%.1f · %d reseñas",
+                                    prenda.getPromedio_rating(),
+                                    prenda.getTotal_ratings()));
+                }
+
+                if (prenda.getMi_rating() == 0) {
+                    btnEscribirResena.setText("ESCRIBIR UNA RESEÑA");
+                } else {
+                    btnEscribirResena.setText("EDITAR MI RESEÑA");
+                    ratingBarAvg.setSecondaryProgress(prenda.getMi_rating()); // opcional: sombrear las estrellas que él dio
+                }
+
+                // ─── 4. LISTA DE COMENTARIOS ───────────────────────────────
+                List<ComentarioEntry> comentarios = prenda.getComentarios(); // mapeado por Gson
+
+                MaterialCardView cardComentarios  = findViewById(R.id.cardComentarios);
+                RecyclerView rvComentarios    = findViewById(R.id.recyclerComentarios);
+                rvComentarios.setLayoutManager(new LinearLayoutManager(DetallesPrenda.this));
+                rvComentarios.setHasFixedSize(true);
+
+                if (comentarios == null || comentarios.isEmpty()) {
+                    // no muestres la tarjeta
+                    cardComentarios.setVisibility(View.GONE);
+                } else {
+                    cardComentarios.setVisibility(View.VISIBLE);
+                    rvComentarios.setAdapter(new ComentarioAdapter(comentarios));
+                }
+
             }
 
             @Override
@@ -241,7 +341,43 @@ public class DetallesPrenda extends AppCompatActivity {
         });
     }
 
+    private void registrarRating(RatingReq ratingReq) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://grupotres.pythonanywhere.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
+        PyAnyApi pyAnyApi = retrofit.create(PyAnyApi.class);
 
+        Call<GeneralResp> call = pyAnyApi.registrarRating("JWT " + token, ratingReq);
+
+        call.enqueue(new Callback<GeneralResp>() {
+            @Override
+            public void onResponse(Call<GeneralResp> call, Response<GeneralResp> response) {
+                if (response.isSuccessful() && response.body() != null && response.body().getCode() == 1) {
+                    // 1️⃣ feedback al usuario
+                    Toast.makeText(DetallesPrenda.this,
+                            "¡Gracias por tu reseña!", Toast.LENGTH_SHORT).show();
+
+                    // 2️⃣ colapsar editor y limpiar campos
+                    layoutEditor.setVisibility(View.GONE);
+                    btnEscribirResena.setVisibility(View.VISIBLE);
+                    ratingBarEditor.setRating(0f);
+                    edtComentario.setText("");
+
+                    // 3️⃣ refrescar la info de ratings
+                    obtenerDetallesPrenda(prendaId);
+                } else {
+                    Toast.makeText(DetallesPrenda.this,
+                            "No se pudo guardar la reseña", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GeneralResp> call, Throwable t) {
+                Toast.makeText(DetallesPrenda.this, "Error de conexión", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 }

@@ -24,9 +24,9 @@
 
     <style name="Widget.Tienda_Ropa.TextInputLayout.OutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxBackgroundColor">@android:color/white</item> <!-- Fondo blanco -->
-        <item name="boxStrokeColor">@color/purple_500</item>        <!-- Borde morado -->
+        <item name="boxStrokeColor">@color/black</item>        <!-- Borde morado -->
         <item name="boxStrokeWidth">2dp</item>                      <!-- Grosor del borde -->
-        <item name="hintTextColor">@color/purple_700</item>         <!-- Color del hint -->
+        <item name="hintTextColor">@color/black</item>         <!-- Color del hint -->
     </style>
 
     <style name="ColorCircleChip" parent="Widget.MaterialComponents.Chip.Choice">
@@ -49,6 +49,7 @@
         <item name="android:gravity">center</item>
         <item name="android:textStyle">bold</item>
     </style>
+
 
 
 </resources>
