@@ -7,7 +7,6 @@ public class ListaDeseosEntry {
     public int idPrenda;
     public int stock;
 
-
     public int getIdPrenda() {
         return idPrenda;
     }

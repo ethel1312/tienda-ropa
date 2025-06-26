@@ -75,4 +75,5 @@
     <string name="back">btn_volver</string>
     <string name="usuario">Usuario</string>
     <string name="btn_escribir_una_rese_a">ESCRIBIR UNA RESEÑA</string>
+    <string name="ver_detalle">Ver detalle\n</string>
 </resources>

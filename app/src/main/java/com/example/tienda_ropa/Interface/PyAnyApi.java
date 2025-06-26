@@ -21,6 +21,7 @@ import com.example.tienda_ropa.model.ParamsCategoria;
 import com.example.tienda_ropa.model.ParamsDepartamento;
 import com.example.tienda_ropa.model.ParamsProvincia;
 import com.example.tienda_ropa.model.ParamsUsuario;
+import com.example.tienda_ropa.model.PedidosResp;
 import com.example.tienda_ropa.model.PrendaDetalleResp;
 import com.example.tienda_ropa.model.Provincia;
 import com.example.tienda_ropa.model.RatingReq;
@@ -62,6 +63,9 @@ public interface PyAnyApi {
                                       @Body RatingReq ratingReq);
     @GET("api_obtener_carrito")
     Call<ObtenerCarritoResp> obtenerCarrito(@Header("Authorization") String authorization);
+
+    @GET("api_historial_pedidos")
+    Call<PedidosResp> historialPedidos(@Header("Authorization") String authorization);
 
     @POST("api_incrementar_cantidad")
     Call<GeneralResp> incrementarCantProduc(@Header("Authorization") String authorization,
