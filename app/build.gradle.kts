@@ -78,6 +78,9 @@ dependencies {
     //FireBase
     implementation(libs.google.firebase.auth) // Usa la última versión disponible
 
+    //para eliminar direccion desplazando a la izq
+    implementation(libs.recyclerview.swipedecorator)
+
 
 
 
