@@ -24,5 +24,6 @@
 
     <color name="starFilled">#FFC107</color>   <!-- amarillo -->
     <color name="starEmpty">#E0E0E0</color>    <!-- gris claro -->
+    <color name="verdeVerificado">#26AB33</color>
 
 </resources>
