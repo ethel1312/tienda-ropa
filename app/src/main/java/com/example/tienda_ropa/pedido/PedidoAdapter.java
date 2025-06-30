@@ -53,6 +53,11 @@ public class PedidoAdapter
 
         h.txtTotal.setText(
                 String.format("Total: S/.%.2f", p.total));
+        h.txtEstado.setText(
+                String.format("Estado: %s", p.estado == 1 ? "Recibido" : p.estado == 2 ? "Devuelto" : "Desconocido")
+        );
+
+
 
         h.btnDetalle.setOnClickListener(v -> {
             Log.d("PedidoAdapter", "ID que envío: " + p.id);

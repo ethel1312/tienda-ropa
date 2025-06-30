@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
 import java.io.OutputStream;
@@ -58,14 +59,14 @@ public class QRActivity extends AppCompatActivity {
         generarQR(qrContent);
 
         btnDescargarQR.setOnClickListener(v -> {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) { // Android 9 o inferior
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
                 } else {
                     tomarCapturaPantalla();
                 }
-            } else { // Android 10 o superior
+            } else {
                 tomarCapturaPantalla();
             }
         });
@@ -75,7 +76,7 @@ public class QRActivity extends AppCompatActivity {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         try {
             int size = 512;
-            com.google.zxing.common.BitMatrix bitMatrix = qrCodeWriter.encode(contenido, BarcodeFormat.QR_CODE, size, size);
+            BitMatrix bitMatrix = qrCodeWriter.encode(contenido, BarcodeFormat.QR_CODE, size, size);
 
             Bitmap bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.RGB_565);
 

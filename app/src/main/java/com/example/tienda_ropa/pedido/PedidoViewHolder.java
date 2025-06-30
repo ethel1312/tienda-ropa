@@ -18,6 +18,8 @@ public class PedidoViewHolder extends RecyclerView.ViewHolder {
     public TextView    txtTotal;            // Total S/.
     public ImageButton btnDetalle;          // Flecha “>” para ver detalle
 
+    public TextView     txtEstado;
+
     public PedidoViewHolder(@NonNull View itemView) {
         super(itemView);
 
@@ -26,5 +28,6 @@ public class PedidoViewHolder extends RecyclerView.ViewHolder {
         txtArticulos      = itemView.findViewById(R.id.txtArticulos);
         txtTotal          = itemView.findViewById(R.id.txtTotal);
         btnDetalle        = itemView.findViewById(R.id.btnDetalle);
+        txtEstado         = itemView.findViewById(R.id.txtEstado);
     }
 }
