@@ -49,6 +49,14 @@
         android:layout_marginTop="2dp"
         android:text="Total: S/.203"
         android:textColor="#000000" />
+        <TextView
+            android:id="@+id/txtEstado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Estado: En proceso"
+            android:textColor="#000000" />
+
     </LinearLayout>
 
         <!-- Botón “>” -->

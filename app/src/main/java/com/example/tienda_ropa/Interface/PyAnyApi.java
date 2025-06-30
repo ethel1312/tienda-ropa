@@ -9,6 +9,7 @@ import com.example.tienda_ropa.model.AuthResp;
 import com.example.tienda_ropa.model.Departamento;
 import com.example.tienda_ropa.model.DetalleApi;
 import com.example.tienda_ropa.model.DetalleCompraResp;
+import com.example.tienda_ropa.model.DevolucionRequest;
 import com.example.tienda_ropa.model.DireccionEliminarRequest;
 import com.example.tienda_ropa.model.Distrito;
 
@@ -165,4 +166,9 @@ public interface PyAnyApi {
             @Header("Authorization") String authorization,
             @Body DireccionEliminarRequest direccionEliminarRequest
     );
+
+    @POST("devolver_compra")
+    Call<Void> devolverCompra(@Header("Authorization") String token,
+                              @Body DevolucionRequest request);
+
 }
