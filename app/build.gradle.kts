@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.volley)
     implementation(libs.picasso)
     implementation(libs.circleindicator)
+    implementation(libs.library)
 
 
     //Google
@@ -73,7 +74,6 @@ dependencies {
 
     implementation(libs.glide)
     implementation(libs.play.services.auth)
-
 
     //FireBase
     implementation(libs.google.firebase.auth) // Usa la última versión disponible

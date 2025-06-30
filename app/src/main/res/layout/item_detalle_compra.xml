@@ -1,0 +1,49 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <!-- Imagen del artículo -->
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/imgItem"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:scaleType="centerCrop" />
+
+    <!-- Datos del artículo -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:paddingStart="8dp">
+
+        <TextView
+            android:id="@+id/txtNombreItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Nombre" />
+
+        <TextView
+            android:id="@+id/txtTallaItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Talla" />
+
+        <TextView
+            android:id="@+id/txtPrecioItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Precio" />
+    </LinearLayout>
+
+    <!-- Cantidad -->
+    <TextView
+        android:id="@+id/txtCantidadItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="x2"
+        android:textStyle="bold" />
+</LinearLayout>

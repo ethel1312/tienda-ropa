@@ -15,7 +15,5 @@ public class PrendaEntry {
         this.url = p_url;
         this.isFavorito = esFavorito;
     }
-
-
 }
 

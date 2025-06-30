@@ -7,6 +7,8 @@ import com.example.tienda_ropa.model.AgregarListaDeseosReq;
 import com.example.tienda_ropa.model.AuthReq;
 import com.example.tienda_ropa.model.AuthResp;
 import com.example.tienda_ropa.model.Departamento;
+import com.example.tienda_ropa.model.DetalleApi;
+import com.example.tienda_ropa.model.DetalleCompraResp;
 import com.example.tienda_ropa.model.DireccionEliminarRequest;
 import com.example.tienda_ropa.model.Distrito;
 
@@ -24,8 +26,10 @@ import com.example.tienda_ropa.model.ParamsCategoria;
 import com.example.tienda_ropa.model.ParamsDepartamento;
 import com.example.tienda_ropa.model.ParamsProvincia;
 import com.example.tienda_ropa.model.ParamsUsuario;
+import com.example.tienda_ropa.model.PedidosResp;
 import com.example.tienda_ropa.model.PrendaDetalleResp;
 import com.example.tienda_ropa.model.Provincia;
+import com.example.tienda_ropa.model.RatingReq;
 import com.example.tienda_ropa.model.RegistrarUsuarioGoogleReq;
 import com.example.tienda_ropa.model.RegistrarUsuarioGoogleResp;
 import com.example.tienda_ropa.model.RegistrarUsuarioReq;
@@ -61,8 +65,14 @@ public interface PyAnyApi {
     @POST("api_agregar_carrito")
     Call<GeneralResp> agregarAlCarrito(@Header("Authorization") String authorization,
                                          @Body AgregarAlCarritoReq agregarAlCarritoReq);
+    @POST("api_registrar_rating")
+    Call<GeneralResp> registrarRating(@Header("Authorization") String authorization,
+                                      @Body RatingReq ratingReq);
     @GET("api_obtener_carrito")
     Call<ObtenerCarritoResp> obtenerCarrito(@Header("Authorization") String authorization);
+
+    @GET("api_historial_pedidos")
+    Call<PedidosResp> historialPedidos(@Header("Authorization") String authorization);
 
     @POST("api_incrementar_cantidad")
     Call<GeneralResp> incrementarCantProduc(@Header("Authorization") String authorization,
@@ -95,6 +105,13 @@ public interface PyAnyApi {
             @Header("Authorization") String authorization,
             @Path("id_prenda") int prendaId
     );
+
+    @GET("api_detalle_compra/{id}")
+    Call<DetalleCompraResp> obtenerDetalleCompra(
+            @Header("Authorization") String authorization,
+            @Path("id") long idOrden);
+
+
     @POST("api_enviar_codigo")
     Call<GeneralResp> enviarCodigo(@Body EmailReq emailReq);
 

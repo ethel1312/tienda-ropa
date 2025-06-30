@@ -22,7 +22,7 @@ import com.google.android.material.button.MaterialButton;
 
 public class menu_usuario extends Fragment {
 
-    CardView mbtnMiCuenta, mbtnMiDireccion;
+    CardView mbtnMiCuenta, mbtnMiDireccion, mBtnHistorialPedidos;
     MaterialButton mBtnCerrarSesion;
 
     @Nullable
@@ -34,6 +34,7 @@ public class menu_usuario extends Fragment {
         mbtnMiCuenta = view.findViewById(R.id.btnMiCuenta);
         mbtnMiDireccion = view.findViewById(R.id.btnMiDireccion);
         mBtnCerrarSesion = view.findViewById(R.id.btnCerrarSesion);
+        mBtnHistorialPedidos = view.findViewById(R.id.btnHistorialPedidos);
 
         // Configurar el clic para Mi Cuenta
         mbtnMiCuenta.setOnClickListener(v -> {
@@ -44,6 +45,11 @@ public class menu_usuario extends Fragment {
         // Configurar el clic para Mi Dirección
         mbtnMiDireccion.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), MiDireccionActivity.class);
+            startActivity(intent);
+        });
+
+        mBtnHistorialPedidos.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), HistorialPedidosActivity.class);
             startActivity(intent);
         });
 

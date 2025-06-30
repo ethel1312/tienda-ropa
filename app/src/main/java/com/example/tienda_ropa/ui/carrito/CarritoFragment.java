@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,6 +35,7 @@ import com.example.tienda_ropa.model.GeneralResp;
 import com.example.tienda_ropa.model.ObtenerCarritoResp;
 import com.example.tienda_ropa.model.ObtenerDirecciones;
 import com.example.tienda_ropa.model.ParamsUsuario;
+import com.example.tienda_ropa.ui.menu_usuario.adapter.DireccionAdapter;
 import com.example.tienda_ropa.ui.menu_usuario.adapter.DireccionesAdapterPago;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
@@ -74,6 +76,7 @@ public class CarritoFragment extends Fragment implements OnCantidadChangeListene
         txtIGV = binding.txtIGV;
         txtEnvio = binding.txtEnvio;
         txtTotal = binding.txtTotal;
+
         recyclerView = binding.recyclerView;
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="1dp"
+    android:layout_marginVertical="6dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <!-- FILA: fecha (izq)  ────────────  rating (der) -->
+
+        <me.zhanghai.android.materialratingbar.MaterialRatingBar
+            android:id="@+id/ratingItem"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:stepSize="1"
+            app:mrb_progressTint="@color/starFilled"
+            app:layout_constraintStart_toStartOf="parent"
+            app:mrb_secondaryProgressTint="@color/starEmpty"
+            app:layout_constraintTop_toTopOf="@id/txtFecha" />
+
+        <TextView
+            android:id="@+id/txtFecha"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="25/06/2025"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            android:paddingBottom="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            tools:ignore="SpeakableText" />
+
+        <!-- ───── FILA: ícono  –  usuario  –  badge VERIFICADO ───── -->
+        <ImageView
+            android:id="@+id/icUsuario"
+            android:layout_width="16dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:contentDescription="@string/usuario"
+            android:src="@drawable/ic_person_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtFecha"
+            app:layout_constraintBottom_toBottomOf="@id/txtUsuario" />
+
+        <TextView
+            android:id="@+id/txtUsuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ethel1312"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginStart="5dp"
+            app:layout_constraintStart_toEndOf="@id/icUsuario"
+            app:layout_constraintTop_toTopOf="@id/icUsuario"
+            app:layout_constraintBottom_toBottomOf="@id/icUsuario" />
+
+        <TextView
+            android:id="@+id/badgeVerificado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/bg_badge_verificado"
+            android:text="VERIFICADO"
+            android:textAllCaps="true"
+            android:textColor="@android:color/white"
+            android:textSize="11sp"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@id/txtUsuario"
+            app:layout_constraintTop_toTopOf="@id/txtUsuario"
+            app:layout_constraintBottom_toBottomOf="@id/txtUsuario"/>
+        <!-- Comentario -->
+        <TextView
+            android:id="@+id/txtComentario"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Buen polo, pero la talla corre un poco chica"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtUsuario"
+            tools:ignore="SpeakableText" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
