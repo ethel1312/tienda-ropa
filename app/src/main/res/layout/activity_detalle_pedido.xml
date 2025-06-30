@@ -153,6 +153,16 @@
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"/>
 
+            <!-- BOTÓN DEVOLVER PEDIDO -->
+            <Button
+                android:id="@+id/btnDevolverPedido"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/black"
+                android:text="Devolver pedido"
+                android:textColor="@android:color/white" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
