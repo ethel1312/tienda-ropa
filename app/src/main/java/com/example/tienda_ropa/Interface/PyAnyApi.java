@@ -7,6 +7,7 @@ import com.example.tienda_ropa.model.AgregarListaDeseosReq;
 import com.example.tienda_ropa.model.AuthReq;
 import com.example.tienda_ropa.model.AuthResp;
 import com.example.tienda_ropa.model.Departamento;
+import com.example.tienda_ropa.model.DireccionEliminarRequest;
 import com.example.tienda_ropa.model.Distrito;
 
 import com.example.tienda_ropa.model.EmailReq;
@@ -141,5 +142,10 @@ public interface PyAnyApi {
                                    @Body WebhookRequest webhookRequest);
 
 
-
+   //PARA ELIMINAR EL DOMICILIO
+    @POST("api_eliminar_direccion_usuario")
+    Call<GeneralResp> eliminarDireccion(
+            @Header("Authorization") String authorization,
+            @Body DireccionEliminarRequest direccionEliminarRequest
+    );
 }
