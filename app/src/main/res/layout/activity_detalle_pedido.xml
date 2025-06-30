@@ -160,7 +160,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="16dp"
-                android:backgroundTint="@color/rojo"
+                android:backgroundTint="@color/black"
                 android:text="Devolver pedido"
                 android:textColor="@android:color/white" />
         </LinearLayout>
