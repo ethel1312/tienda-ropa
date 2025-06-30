@@ -82,6 +82,7 @@ dependencies {
     implementation(libs.recyclerview.swipedecorator)
 
 
-
+    // qr
+    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
 
 }
