@@ -79,6 +79,7 @@ dependencies {
     implementation(libs.google.firebase.auth) // Usa la última versión disponible
 
 
-
+    // qr
+    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
 
 }

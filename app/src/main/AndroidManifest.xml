@@ -41,6 +41,12 @@
             android:name=".CarritoActivity"
             android:exported="false" />
         <activity
+            android:name=".QRActivity"
+            android:exported="false" />
+        <activity
+            android:name=".WebViewQRActivity"
+            android:exported="false" />
+        <activity
             android:name=".YapeActivity"
             android:exported="false" />
         <activity
