@@ -31,17 +31,21 @@
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <data
-                    android:host="verificar_pago"
-                    android:scheme="tiendaropa" />
+                    android:scheme="tiendaropa"
+                    android:host="verificar_pago" />
             </intent-filter>
         </activity>
         <activity
             android:name=".CarritoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".QRActivity"
+            android:exported="false" />
+        <activity
+            android:name=".WebViewQRActivity"
             android:exported="false" />
         <activity
             android:name=".YapeActivity"
@@ -88,15 +92,14 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="true"
-            android:label="@string/app_name"
-            android:windowSoftInputMode="adjustResize" />
+            android:label="@string/app_name" />
     </application>
 
 </manifest>

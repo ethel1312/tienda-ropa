@@ -11,11 +11,10 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gris">#808080</color>
     <color name="productGridBackgroundColor">#FFFFFFFF</color>
-    <color name="grey_100">#F5F5F5</color>
-    <color name="verdeVerificado">#4CAF50</color>
-
-    <!--    HOME-->
+    <color name="grey_100">#808080</color>
+<!--    HOME-->
     <color name="btnCategoriaColor">#F5F6FA</color>
+
 
 
     <color name="colorFondo">#F5F5F5</color> <!-- gris claro -->

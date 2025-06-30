@@ -9,6 +9,7 @@ import com.example.tienda_ropa.model.AuthResp;
 import com.example.tienda_ropa.model.Departamento;
 import com.example.tienda_ropa.model.DetalleApi;
 import com.example.tienda_ropa.model.DetalleCompraResp;
+import com.example.tienda_ropa.model.DireccionEliminarRequest;
 import com.example.tienda_ropa.model.Distrito;
 
 import com.example.tienda_ropa.model.EmailReq;
@@ -19,6 +20,8 @@ import com.example.tienda_ropa.model.ObtenerListaDeseosResp;
 import com.example.tienda_ropa.model.ModificarContraReq;
 import com.example.tienda_ropa.model.ObtenerPrendaResp;
 import com.example.tienda_ropa.model.ObtenerUsuario;
+import com.example.tienda_ropa.model.PagoPaypalRequest;
+import com.example.tienda_ropa.model.PagoPaypalResponse;
 import com.example.tienda_ropa.model.ParamsCategoria;
 import com.example.tienda_ropa.model.ParamsDepartamento;
 import com.example.tienda_ropa.model.ParamsProvincia;
@@ -30,9 +33,15 @@ import com.example.tienda_ropa.model.RatingReq;
 import com.example.tienda_ropa.model.RegistrarUsuarioGoogleReq;
 import com.example.tienda_ropa.model.RegistrarUsuarioGoogleResp;
 import com.example.tienda_ropa.model.RegistrarUsuarioReq;
+import com.example.tienda_ropa.model.Ubigeo;
 import com.example.tienda_ropa.model.VerificarCodReq;
 import com.example.tienda_ropa.model.DireccionRequest;
+import com.example.tienda_ropa.model.WebhookRequest;
+
 import java.util.List;
+
+import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -141,6 +150,19 @@ public interface PyAnyApi {
     Call<GeneralResp> agregarDireccion(@Header("Authorization") String authorization,
                                        @Body DireccionRequest direccionRequest);
 
+    @POST("api_iniciar_pago_pay")
+    Call<PagoPaypalResponse> iniciarPagoPaypal(@Header("Authorization") String authorization,
+                                               @Body PagoPaypalRequest pagoPaypalRequest);
+
+    @POST("webhook_pago_pay")
+    Call<Void> llamarWebhookPaypal(@Header("Authorization") String authorization,
+                                   @Body WebhookRequest webhookRequest);
 
 
+   //PARA ELIMINAR EL DOMICILIO
+    @POST("api_eliminar_direccion_usuario")
+    Call<GeneralResp> eliminarDireccion(
+            @Header("Authorization") String authorization,
+            @Body DireccionEliminarRequest direccionEliminarRequest
+    );
 }

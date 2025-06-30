@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,6 +34,14 @@ public class DireccionesAdapterPago extends RecyclerView.Adapter<DireccionesAdap
     @Override
     public DireccionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.direcciones_direccion_card, parent, false);
+
+        // ✅ Forzar que el ítem ocupe todo el ancho del RecyclerView
+        RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        view.setLayoutParams(layoutParams);
+
         return new DireccionViewHolder(view);
     }
 
