@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ import com.example.tienda_ropa.Interface.PyAnyApi;
 import com.example.tienda_ropa.R;
 import com.example.tienda_ropa.model.DetalleApi;
 import com.example.tienda_ropa.model.DetalleCompraResp;
+import com.example.tienda_ropa.model.DevolucionRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +32,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import androidx.appcompat.app.AlertDialog.Builder;
 
 public class DetallePedidoActivity extends AppCompatActivity {
 
@@ -45,6 +49,9 @@ public class DetallePedidoActivity extends AppCompatActivity {
     private long idOrden;
 
     ImageButton btnVolver;
+
+    Button btnDevolver;
+
 
 
     @Override
@@ -78,6 +85,22 @@ public class DetallePedidoActivity extends AppCompatActivity {
         recyclerItems.setLayoutManager(new LinearLayoutManager(this));
 
         btnVolver = findViewById(R.id.btnVolverDetalle);
+
+        btnDevolver = findViewById(R.id.btnDevolverPedido);
+
+        btnDevolver.setOnClickListener(v -> {
+            new Builder(DetallePedidoActivity.this)
+                    .setTitle("Confirmar devolución")
+                    .setMessage("¿Estás seguro de que deseas devolver este pedido?")
+                    .setPositiveButton("Sí, devolver", (dialog, which) -> {
+                        devolverPedido(idOrden);
+                    })
+                    .setNegativeButton("Cancelar", null)
+                    .show();
+        });
+
+
+
 
         btnVolver.setOnClickListener(v -> finish());
 
@@ -161,5 +184,38 @@ public class DetallePedidoActivity extends AppCompatActivity {
         }
         recyclerItems.setAdapter(new DetallePedidoAdapter(DetallePedidoActivity.this, lista)); // usa tu adapter
     }
+
+    private void devolverPedido(long idOrden) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://grupotres.pythonanywhere.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        PyAnyApi api = retrofit.create(PyAnyApi.class);
+
+        DevolucionRequest request = new DevolucionRequest(idOrden, "El producto no cumplió mis expectativas");
+
+        Call<Void> call = api.devolverCompra("JWT " + token, request);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(DetallePedidoActivity.this, "Pedido devuelto exitosamente", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    Toast.makeText(DetallePedidoActivity.this, "Error al devolver: " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(DetallePedidoActivity.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+
 
 }

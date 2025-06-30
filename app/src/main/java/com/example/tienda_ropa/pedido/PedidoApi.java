@@ -9,6 +9,8 @@ public class PedidoApi {
     private String articulos;  // viene como "3"
     private String total;
 
+    private String estado;
+
     public long getId_orden() {
         return id_orden;
     }
@@ -27,5 +29,9 @@ public class PedidoApi {
 
     public String getTotal() {
         return total;
+    }
+
+    public String getEstado() {
+        return estado;
     }
 }
