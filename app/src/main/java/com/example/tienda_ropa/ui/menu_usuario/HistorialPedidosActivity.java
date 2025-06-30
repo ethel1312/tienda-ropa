@@ -117,6 +117,7 @@ public class HistorialPedidosActivity extends AppCompatActivity {
                                 p.getCodigo_pedido(),          // String  (puede venir vacío "")
                                 p.getFecha_realizado(),        // String  "dd/MM/yyyy"
                                 Integer.parseInt(p.getArticulos()), // int
+                                Integer.parseInt(p.getEstado()),
                                 p.getTotal()                   // String  "150.00"
                         );
                         listaPedidos.add(entry);
