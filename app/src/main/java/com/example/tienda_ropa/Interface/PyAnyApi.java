@@ -7,6 +7,8 @@ import com.example.tienda_ropa.model.AgregarListaDeseosReq;
 import com.example.tienda_ropa.model.AuthReq;
 import com.example.tienda_ropa.model.AuthResp;
 import com.example.tienda_ropa.model.Departamento;
+import com.example.tienda_ropa.model.DetalleApi;
+import com.example.tienda_ropa.model.DetalleCompraResp;
 import com.example.tienda_ropa.model.Distrito;
 
 import com.example.tienda_ropa.model.EmailReq;
@@ -28,13 +30,9 @@ import com.example.tienda_ropa.model.RatingReq;
 import com.example.tienda_ropa.model.RegistrarUsuarioGoogleReq;
 import com.example.tienda_ropa.model.RegistrarUsuarioGoogleResp;
 import com.example.tienda_ropa.model.RegistrarUsuarioReq;
-import com.example.tienda_ropa.model.Ubigeo;
 import com.example.tienda_ropa.model.VerificarCodReq;
 import com.example.tienda_ropa.model.DireccionRequest;
 import java.util.List;
-
-import java.util.List;
-import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -98,6 +96,13 @@ public interface PyAnyApi {
             @Header("Authorization") String authorization,
             @Path("id_prenda") int prendaId
     );
+
+    @GET("api_detalle_compra/{id}")
+    Call<DetalleCompraResp> obtenerDetalleCompra(
+            @Header("Authorization") String authorization,
+            @Path("id") long idOrden);
+
+
     @POST("api_enviar_codigo")
     Call<GeneralResp> enviarCodigo(@Body EmailReq emailReq);
 

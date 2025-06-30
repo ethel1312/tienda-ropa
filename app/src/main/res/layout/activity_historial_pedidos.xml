@@ -64,7 +64,7 @@
         android:background="#D1D4D6"
         android:gravity="end|center_vertical"
         android:paddingEnd="16dp"
-        android:text="AGOSTO 2024"
+        android:text="JUNIO 2024"
         android:textAllCaps="true"
         android:textColor="@color/black"
         android:textStyle="bold"

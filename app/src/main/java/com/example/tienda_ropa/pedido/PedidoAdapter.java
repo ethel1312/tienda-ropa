@@ -1,5 +1,7 @@
 package com.example.tienda_ropa.pedido;
 
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +34,8 @@ public class PedidoAdapter
         return new PedidoViewHolder(v);
     }
 
+
+
     @Override
     public void onBindViewHolder(
             @NonNull PedidoViewHolder h, int position) {
@@ -49,6 +53,13 @@ public class PedidoAdapter
 
         h.txtTotal.setText(
                 String.format("Total: S/.%.2f", p.total));
+
+        h.btnDetalle.setOnClickListener(v -> {
+            Log.d("PedidoAdapter", "ID que envío: " + p.id);
+            Intent i = new Intent(v.getContext(), DetallePedidoActivity.class);
+            i.putExtra("id_orden", p.id);          // ← pasa el id del pedido
+            v.getContext().startActivity(i);
+        });
     }
 
     @Override

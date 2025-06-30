@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainDetalle"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--─────────  BARRA SUPERIOR  ─────────-->
+    <FrameLayout
+        android:id="@+id/barraSuperior"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorSurface"
+        android:elevation="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/btnVolverDetalle"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_vertical|start"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="12dp"
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            android:contentDescription="@string/back"/>
+
+        <TextView
+            android:id="@+id/txtTituloDetalle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Detalle del pedido"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+    </FrameLayout>
+
+    <!--─────────  CONTENIDO DESPLAZABLE  ─────────-->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollDetalle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barraSuperior"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- RESUMEN DEL PEDIDO -->
+            <TextView
+                android:id="@+id/txtCodigo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.Material3.BodyLarge"
+                android:text="Pedido: ORD001" />
+
+            <TextView
+                android:id="@+id/txtFecha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.Material3.BodyLarge"
+                android:layout_marginTop="2dp"
+                android:text="Fecha: 27/08/2024" />
+
+            <TextView
+                android:id="@+id/txtEstado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.Material3.BodyLarge"
+                android:layout_marginTop="2dp"
+                android:text="Estado: Entregado" />
+
+            <!-- TOTALES -->
+            <TextView
+                android:id="@+id/txtSubtotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Subtotal: S/ --"/>
+
+            <TextView
+                android:id="@+id/txtEnvio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Envío: S/ --"/>
+
+            <TextView
+                android:id="@+id/txtIgv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="IGV: S/ --"/>
+
+            <TextView
+                android:id="@+id/txtTotalPagar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginTop="4dp"
+                android:text="TOTAL: S/ --"/>
+
+            <!-- DIRECCIÓN DE ENVÍO -->
+            <TextView
+                android:id="@+id/labelDireccion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Dirección de envío"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/txtDireccion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Av. Siempre Viva 742"/>
+
+            <!-- MÉTODO DE PAGO -->
+            <TextView
+                android:id="@+id/labelMetodoPago"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Método de pago"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/txtMetodoPago"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tarjeta Visa **** 4242"/>
+
+            <!-- LISTA DE ARTÍCULOS -->
+            <TextView
+                android:id="@+id/labelArticulos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Artículos comprados"
+                android:textStyle="bold"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerItems"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"/>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

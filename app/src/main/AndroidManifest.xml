@@ -17,6 +17,9 @@
         android:theme="@style/Theme.Tienda_Ropa"
         tools:targetApi="31">
         <activity
+            android:name=".pedido.DetallePedidoActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.menu_usuario.HistorialPedidosActivity"
             android:exported="false" />
         <activity
